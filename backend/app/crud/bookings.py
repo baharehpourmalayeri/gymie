@@ -1,12 +1,12 @@
 from sqlalchemy.orm import Session
-from app import schemas
 from app.model.classes import GymClass
 from app.model.bookings import Booking
+from app.schema.bookings import BookingCreate
 from fastapi import HTTPException, Depends
 from app.database import get_db
 
 
-def create_booking(booking: schemas.BookingCreate, db: Session = Depends(get_db)):
+def create_booking(booking: BookingCreate, db: Session = Depends(get_db)):
     # Check if class exists
     gym_class = db.query(GymClass).filter(GymClass.id == booking.class_id).first()
     if not gym_class:

@@ -7,7 +7,7 @@ class GymClassResponse(BaseModel):
     id: int
     name: str
     trainer: str
-    type: str  # keep same as DB
+    training: str # Yoga, HIIT, etc.
     datetime: datetime
     capacity: int
     image: str | None = None

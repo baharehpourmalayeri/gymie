@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
-from app import schemas
 from app.model.classes import GymClass
-from app.model.bookings import Booking
+from app.schema.classes import GymClassResponse
 from fastapi import HTTPException, Depends
 from app.database import get_db
 
@@ -16,11 +15,11 @@ def get_classes(db: Session = Depends(get_db)):
         is_full = free_spots <= 0
 
         result.append(
-            schemas.GymClassResponse(
+            GymClassResponse(
                 id=c.id,
                 name=c.name,
                 trainer=c.trainer,
-                type=c.training,  # keep same as DB
+                training=c.training,  # keep same as DB
                 datetime=c.datetime,
                 capacity=c.capacity,
                 image=c.image,
@@ -41,11 +40,11 @@ def get_class(class_id: int, db: Session = Depends(get_db)):
     free_spots = c.capacity - booked_count
     is_full = free_spots <= 0
 
-    return schemas.GymClassResponse(
+    return GymClassResponse(
         id=c.id,
         name=c.name,
         trainer=c.trainer,
-        type=c.training,  # keep same as DB
+        training=c.training,  # keep same as DB
         datetime=c.datetime,
         capacity=c.capacity,
         image=c.image,
