@@ -1,3 +1,54 @@
-<footer class="bg-gray-800 text-white p-4 text-center">
-  &copy; 2026 Moveo. All rights reserved.
+<footer class="universal-theme pt-12 pb-6">
+  <div
+    class="max-w-6xl mx-auto mt-10 px-6 grid grid-cols-1 md:grid-cols-5 items-start justify-between gap-8"
+  >
+    <div class="flex justify-center md:justify-start">
+      <img
+        [src]="darkMode ? '/nav/logo-light.png' : '/nav/logo-dark.png'"
+        alt="Moveo Logo"
+        class="w-24 md:w-36"
+      />
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h3 class="text-lg font-bold font-orbitron mb-4">Moveo</h3>
+      <p class="text-sm max-w-[18ch]">
+        Join our community and reach your fitness goals with Moveo.
+      </p>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/home" class="hover:text-gray-900 transition">Home</a></li>
+        <li><a href="/workouts" class="hover:text-gray-900 transition">Workouts</a></li>
+        <li><a href="/coaches" class="hover:text-gray-900 transition">Coaches</a></li>
+      </ul>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h3 class="text-lg font-bold mb-4">Contact</h3>
+      <p class="text-sm">support@moveo.com</p>
+      <p class="text-sm">+46 123 456 789</p>
+    </div>
+
+    <div class="flex flex-col justify-center">
+      <h3 class="text-lg font-bold mb-4">Follow Us</h3>
+      <div class="flex space-x-4 items-center">
+        <a href="#" class="hover:text-blue-500 transition">
+          <fa-icon [icon]="['fab', 'facebook']" size="lg"></fa-icon>
+        </a>
+        <a href="#" class="hover:text-pink-500 transition">
+          <fa-icon [icon]="['fab', 'instagram']" size="lg"></fa-icon>
+        </a>
+        <a href="#" class="hover:text-blue-700 transition">
+          <fa-icon [icon]="['fab', 'linkedin']" size="lg"></fa-icon>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="universal-line mt-12 border-t pt-6 text-sm text-center">
+    &copy; 2026 Moveo. All rights reserved.
+  </div>
 </footer>

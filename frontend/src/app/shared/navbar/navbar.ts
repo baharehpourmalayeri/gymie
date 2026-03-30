@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavLinks } from './nav-links/nav-links';
@@ -13,24 +13,23 @@ import { ToggleDarkMode } from './toggle/toggle';
   styleUrls: ['./navbar.css'],
 })
 export class Navbar {
-  darkMode = false;
+  @Input() darkMode = false;
+  @Output() darkModeChange = new EventEmitter<boolean>();
 
   links = [
     { path: '/', label: 'Home' },
     { path: '/workouts', label: 'Workouts' },
-    { path: '/points', label: 'Points' },
-    { path: '/login', label: 'Login' },
+    { path: '/coaches', label: 'Movers' },
   ];
 
   dropdownItems = [
     { label: 'My Account', path: '/profile' },
-    { label: 'Orders', path: '/profile/orders' },
+    { label: 'Bookings', path: '/profile/bookings' },
     { label: 'Favorites', path: '/profile/favorites' },
   ];
 
   onToggleDarkMode(value: boolean) {
-    this.darkMode = value;
-    document.documentElement.classList.toggle('dark', this.darkMode);
+    this.darkModeChange.emit(value);
   }
 
   logout() {

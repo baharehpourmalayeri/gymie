@@ -11,7 +11,7 @@ import { FavoriteService } from '../../core/services/favorite.service';
     <button
       type="button"
       (click)="toggle($event)"
-      class="p-2 transition-transform duration-150 hover:scale-110"
+      class="transition-transform duration-150 hover:scale-110"
       aria-label="Toggle favorite"
     >
       <mat-icon

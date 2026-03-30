@@ -1,9 +1,9 @@
 <div class="flex flex-col min-h-screen">
-  <app-navbar></app-navbar>
+  <app-navbar [darkMode]="darkMode" (darkModeChange)="onToggleDarkMode($event)"></app-navbar>
 
   <main class="flex-grow">
     <router-outlet></router-outlet>
   </main>
 
-  <app-footer></app-footer>
+  <app-footer [darkMode]="darkMode"></app-footer>
 </div>

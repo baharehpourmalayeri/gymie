@@ -1,15 +1,15 @@
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-20">
   @for (workout of workouts; track workout.title) {
     <div
-      class="relative bg-white rounded-lg shadow overflow-hidden cursor-pointer"
+      class="relative universal-card rounded-xl shadow overflow-hidden cursor-pointer"
       (click)="goToWorkout(workout)"
     >
       <img [src]="workout.image" [alt]="workout.title" class="w-full h-40 object-cover" />
 
-      <div class="flex justify-between p-2">
+      <div class="flex justify-between p-4">
         <div>
           <h3 class="font-semibold text-lg">{{ workout.title }}</h3>
-          <p class="text-gray-500 text-sm">{{ workout.description }}</p>
+          <p class="universal-card text-sm">{{ workout.description }}</p>
         </div>
         <div>
           <app-favorite-toggle

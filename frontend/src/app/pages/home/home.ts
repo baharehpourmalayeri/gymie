@@ -1,17 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Workout } from '../workouts/workout-list/workout-list';
 import { WorkoutService } from '../../core/services/workout.service';
 import { PopularWorkouts } from './popular-workouts-section/popular-workouts';
-import { Rewards } from './rewards-section/rewards';
+import { About } from './about-us-section/about';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, PopularWorkouts, Rewards],
+  imports: [CommonModule, PopularWorkouts, About],
   templateUrl: './home.html',
 })
 export class Home {
   topWorkouts: Workout[] = [];
+  scrollY = 0;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.scrollY = window.scrollY;
+  }
 
   rewardCards = [
     { title: 'Easy Booking', description: 'Reserve your spot in just a few clicks.' },

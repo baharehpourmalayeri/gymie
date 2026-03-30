@@ -1,16 +1,23 @@
 <div class="min-h-screen">
-  <section class="relative">
-    <img src="/home/1.jpg" alt="Landing Image" class="w-full h-100 object-cover" />
+  <section class="relative h-screen overflow-hidden">
+    <img
+      src="/home/1.jpg"
+      alt="Landing Image"
+      class="absolute w-full h-full object-cover"
+      [style.transform]="'translateY(' + scrollY * 0.3 + 'px)'"
+    />
 
     <div
       class="absolute inset-0 flex flex-col justify-center items-center text-center bg-black/40 text-white px-6"
+      [style.transform]="'translateY(' + scrollY * 0.6 + 'px)'"
     >
-      <h1 class="text-4xl font-bold mb-4">Welcome to Moveo</h1>
-      <p class="mb-6 max-w-md">Book classes, stay active, and earn rewards</p>
+      <h1 class="text-4xl font-bold mb-4">Welcome to <span class="font-orbitron">Moveo</span></h1>
+      <p class="mb-6 max-w-md font-orbitron">Where Every Move Matters</p>
     </div>
   </section>
+
   <div>
     <app-popular-workouts [workouts]="topWorkouts"></app-popular-workouts>
-    <app-rewards [rewards]="rewardCards"></app-rewards>
+    <app-about></app-about>
   </div>
 </div>

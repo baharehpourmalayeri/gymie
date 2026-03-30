@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { FavoriteToggle } from '../../../shared/favorite/favorite-toggle';
 import { Router } from '@angular/router';
 
@@ -15,7 +14,7 @@ export interface Workout {
 @Component({
   selector: 'app-workout-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FavoriteToggle],
+  imports: [CommonModule, FavoriteToggle],
   templateUrl: './workout-list.html',
 })
 export class WorkoutList {

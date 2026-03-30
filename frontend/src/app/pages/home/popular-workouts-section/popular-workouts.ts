@@ -11,4 +11,5 @@ import { RouterLink } from '@angular/router';
 })
 export class PopularWorkouts {
   @Input() workouts: Workout[] = [];
+  @Input() darkMode = false;
 }

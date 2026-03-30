@@ -2,11 +2,7 @@
   <div class="relative" #profileDropdownRef>
     <button
       class="flex items-center justify-between px-2 py-1 w-20 h-10 rounded-full shadow-sm transition-all duration-200"
-      [ngClass]="
-        darkMode
-          ? 'bg-gray-800 hover:bg-gray-700 text-white'
-          : 'bg-gray-100 hover:bg-gray-200 text-black'
-      "
+      [ngClass]="darkMode ? 'bg-[#202020] text-white' : 'bg-[#dadada] text-black'"
       (click)="toggleDropdown($event)"
     >
       <img
@@ -24,13 +20,13 @@
     @if (profileDropdownOpen) {
       <div
         class="absolute right-0 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
-        [ngClass]="darkMode ? 'bg-gray-700 text-[#e0e0e0]' : 'bg-gray-200 text-black'"
+        [ngClass]="darkMode ? 'bg-[#393939] text-[#e0e0e0]' : 'bg-[#dadada] text-black'"
       >
         @for (item of dropdownItems; track item.path) {
           <a
             [routerLink]="item.path"
             class="block px-4 py-2 transition cursor-pointer"
-            [ngClass]="darkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-300'"
+            [ngClass]="darkMode ? 'hover:bg-[#2c2c2c]' : 'hover:bg-[#b5b5b5]'"
           >
             {{ item.label }}
           </a>
@@ -39,7 +35,7 @@
         <button
           (click)="logout.emit()"
           class="w-full text-left block px-4 py-2 transition cursor-pointer"
-          [ngClass]="darkMode ? 'hover:bg-gray-600' : 'hover:bg-gray-300'"
+          [ngClass]="darkMode ? 'hover:bg-[#2c2c2c]' : 'hover:bg-[#b5b5b5]'"
         >
           Log Out
         </button>

@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Navbar} from './shared/navbar/navbar';
+import { Navbar } from './shared/navbar/navbar';
 import { Footer } from './shared/footer/footer';
 
 @Component({
@@ -8,8 +8,13 @@ import { Footer } from './shared/footer/footer';
   standalone: true,
   imports: [RouterOutlet, Navbar, Footer],
   templateUrl: './app.html',
-  styleUrls: ['./app.css']
+  styleUrls: ['./app.css'],
 })
 export class App {
-  protected readonly title = signal('frontend');
+  darkMode = false;
+
+  onToggleDarkMode(value: boolean) {
+    this.darkMode = value;
+    document.documentElement.classList.toggle('dark', this.darkMode);
+  }
 }

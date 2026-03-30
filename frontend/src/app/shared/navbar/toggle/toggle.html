@@ -1,11 +1,11 @@
 <button
   class="relative w-20 h-10 rounded-full duration-300 flex items-center justify-center"
-  [ngClass]="darkMode ? 'bg-gray-800' : 'bg-gray-100'"
+  [ngClass]="darkMode ? 'bg-[#202020]' : 'bg-[#dadada]'"
   (click)="toggle()"
 >
   <div
     class="absolute top-0.5 left-0.5 w-9 h-9 rounded-full shadow-md flex items-center justify-center text-sm transition-transform duration-300"
-    [ngClass]="darkMode ? 'bg-gray-900 text-white translate-x-10' : 'bg-white text-black'"
+    [ngClass]="darkMode ? 'bg-[#393939] text-white translate-x-10' : 'bg-[#ececec] text-black'"
   >
     @if (!darkMode) {
       <span>☀️</span>

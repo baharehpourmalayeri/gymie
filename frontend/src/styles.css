@@ -1,11 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 @import 'tailwindcss';
 
+.universal-theme {
+  @apply bg-gray-200 text-black transition-colors duration-300;
+}
+
+html.dark .universal-theme {
+  @apply bg-[#151515] text-[#b3b3b3];
+}
+
 body {
-  @apply bg-gray-100 text-gray-900 transition-colors duration-300;
+  @apply bg-[#f1f1f1] text-black transition-colors duration-300;
 }
 
 html.dark body {
-  @apply bg-gray-800 text-gray-100;
+  @apply bg-[#202020] text-[#dfdfdf];
 }
 
 nav {
@@ -13,7 +22,7 @@ nav {
 }
 
 footer {
-  @apply bg-gray-200 text-gray-900 p-6 transition-colors duration-300;
+  @apply bg-gray-200 text-black dark:text-[#b3b3b3] p-6;
 }
 
 html.dark footer {
@@ -25,3 +34,34 @@ section {
   @apply transition-colors duration-300;
 }
 
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.page-content {
+  @apply mt-32 max-w-6xl mx-auto px-4 md:px-6;
+}
+
+.universal-card {
+  @apply bg-gray-200 text-black;
+}
+
+html.dark .universal-card {
+  @apply bg-[#151515] text-[#dfdfdf];
+}
+
+.universal-button {
+  @apply bg-[#bbbbbb] text-black hover:bg-[#afafaf];
+}
+
+html.dark .universal-button {
+  @apply bg-[#373737] text-[#dfdfdf] hover:bg-[#4b4b4b];
+}
+
+.universal-line {
+  @apply border-gray-300;
+}
+
+html.dark .universal-line {
+  @apply border-[#4b4b4b];
+}
