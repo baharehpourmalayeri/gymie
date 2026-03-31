@@ -19,8 +19,47 @@
         </div>
       </div>
       <div class="flex justify-end mt-4">
-        <button class="universal-button px-4 py-2 rounded-full">Book Now</button>
+        <button
+          class="universal-button px-4 py-2 rounded-full"
+          (click)="openCalendar(selectedWorkout)"
+        >
+          {{ isCalendarOpen && showCalendar ? 'Cancel' : 'Book Now' }}
+        </button>
       </div>
+      @if (bookedSessions && bookedSessions.length > 0) {
+        @for (session of bookedSessions; track session.id) {
+          <div
+            class="mt-6 p-4 bg-green-100 text-green-800 rounded flex justify-between items-center"
+          >
+            <div>
+              Successfully booked <strong>{{ session.workoutTitle }}</strong> on
+              {{ session.start | date: 'short' }}!
+            </div>
+            <button
+              class="universal-button px-4 py-1 rounded-full bg-red-500 text-white hover:bg-red-600"
+              (click)="cancelConfirmedBooking(session)"
+            >
+              Cancel Booking
+            </button>
+          </div>
+        }
+      }
+
+      @if (showCalendar) {
+        <div class="mt-10">
+          <h2 class="text-2xl font-bold mb-4">Select a Session</h2>
+          <div class="w-full h-full">
+            <app-calendar
+              mode="workouts"
+              [workout]="workout"
+              [bookedSessions]="bookedSessions"
+              (bookingConfirmed)="onBookingConfirmed($event)"
+              (bookingCanceled)="onBookingCanceled($event)"
+            >
+            </app-calendar>
+          </div>
+        </div>
+      }
     </div>
   </div>
 }
