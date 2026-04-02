@@ -1,0 +1,51 @@
+@if (coach; as selectedCoach) {
+  <div class="flex justify-center mt-2 px-4 py-28">
+    <div class="w-full max-w-6xl p-6 universal-card rounded-xl shadow">
+      <div class="flex flex-col h-160 lg:flex-row gap-10">
+        <div class="w-full lg:w-1/2 flex flex-col mt-12">
+          <img
+            [src]="selectedCoach.image"
+            [alt]="selectedCoach.name"
+            class="w-full h-110 object-cover rounded-xl mb-4"
+          />
+
+          <h1 class="text-3xl font-bold mb-4">{{ selectedCoach.title }}</h1>
+          <p class="mb-4 mt-2">{{ selectedCoach?.bio }}</p>
+        </div>
+
+        <div class="w-full h-160 lg:w-1/2">
+          <h2 class="text-2xl font-bold mb-4">Select a Session</h2>
+
+          <div class="w-full overflow-auto">
+            <app-coach-calendar
+              [coach]="selectedCoach"
+              [bookedSessions]="bookedSessions"
+              (bookingConfirmed)="onBookingConfirmed($event)"
+              (bookingCanceled)="onBookingCanceled($event)"
+            >
+            </app-coach-calendar>
+          </div>
+        </div>
+      </div>
+
+      @if (bookedSessions && bookedSessions.length > 0) {
+        @for (session of bookedSessions; track session.id) {
+          <div
+            class="mt-2 p-4 bg-green-100 text-green-800 rounded flex justify-between items-center"
+          >
+            <div>
+              Successfully booked <strong>{{ session.workoutTitle }}</strong> on
+              {{ session.start | date: 'short' }}!
+            </div>
+            <button
+              class="universal-button px-4 py-1 rounded-full bg-red-500 text-white hover:bg-red-600"
+              (click)="cancelConfirmedBooking(session)"
+            >
+              Cancel Booking
+            </button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+}

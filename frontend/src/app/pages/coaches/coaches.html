@@ -13,14 +13,14 @@
         <div class="p-6 flex flex-col flex-1 justify-center">
           <h2 class="text-xl font-bold mb-1">{{ coach.name }}</h2>
           <p class="italic mb-4">{{ coach.title }}</p>
-          <p class="text-sm mb-4">{{ coach.bio }}</p>
-
-          <button
-            class="universal-button self-center w-40 px-2 py-3 rounded-full transition mt-auto shadow-lg cursor-pointer"
-          >
-            Book Free Session
-          </button>
+          <p class="text-sm mb-2">{{ coach.bio }}</p>
         </div>
+        <button
+          class="universal-button self-center w-40 mb-8 px-2 py-3 rounded-full transition mt-auto shadow-lg cursor-pointer"
+          (click)="goToCoach(coach)"
+        >
+          Book Now
+        </button>
       </div>
     }
   </div>

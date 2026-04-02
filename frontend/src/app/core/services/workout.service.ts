@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Workout } from '../../pages/workouts/workout-list/workout-list';
+import { Workout } from '../models/workout.model';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
   private workouts: Workout[] = [
     {
+      id: '1',
+      slug: 'yoga',
       title: 'Yoga',
       description: 'Relax and improve flexibility',
       longDescription:
@@ -13,6 +15,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '2',
+      slug: 'hiit',
       title: 'HIIT',
       description: 'High intensity fat burning',
       longDescription:
@@ -21,6 +25,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '3',
+      slug: 'pilates',
       title: 'Pilates',
       description: 'Core strength and balance',
       longDescription:
@@ -29,6 +35,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '4',
+      slug: 'boxing',
       title: 'Boxing',
       description: 'Strength and endurance',
       longDescription:
@@ -37,6 +45,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '5',
+      slug: 'crossfit',
       title: 'Crossfit',
       description: 'Full body workout',
       longDescription:
@@ -45,6 +55,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '6',
+      slug: 'zumba',
       title: 'Zumba',
       description: 'Fun dance workout',
       longDescription:
@@ -53,6 +65,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '7',
+      slug: 'running',
       title: 'Running',
       description: 'Cardio for stamina',
       longDescription:
@@ -61,6 +75,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '8',
+      slug: 'cycling',
       title: 'Cycling',
       description: 'Endurance and leg strength',
       longDescription:
@@ -69,6 +85,8 @@ export class WorkoutService {
       isFavorite: false,
     },
     {
+      id: '9',
+      slug: 'stretching',
       title: 'Stretching',
       description: 'Flexibility and recovery',
       longDescription:
@@ -82,8 +100,8 @@ export class WorkoutService {
     return this.workouts;
   }
 
-  getByTitle(title: string): Workout | undefined {
-    return this.workouts.find((w) => w.title === title);
+  getBySlug(slug: string): Workout | undefined {
+    return this.workouts.find((w) => w.slug === slug);
   }
 
   getTop(n: number): Workout[] {

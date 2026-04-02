@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WorkoutList, Workout } from './workout-list/workout-list';
+import { WorkoutList } from './workout-list/workout-list';
 import { WorkoutService } from '../../core/services/workout.service';
 import { MatIconModule } from '@angular/material/icon';
+import { Workout } from '../../core/models/workout.model';
 
 @Component({
   selector: 'app-workouts-page',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // for ngModel
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,6 @@ export class Register {
   password: string = '';
   confirmPassword: string = '';
 
-  // temporary register function
   register() {
     if (this.password !== this.confirmPassword) {
       alert('Passwords do not match!');
@@ -23,6 +22,5 @@ export class Register {
 
     console.log('Registering user:', this.name, this.email);
     alert(`Registered user: ${this.name} (${this.email})`);
-
   }
 }

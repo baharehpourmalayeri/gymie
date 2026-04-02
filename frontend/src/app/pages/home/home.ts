@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Workout } from '../workouts/workout-list/workout-list';
+import { Workout } from '../../core/models/workout.model';
 import { WorkoutService } from '../../core/services/workout.service';
 import { PopularWorkouts } from './popular-workouts-section/popular-workouts';
 import { About } from './about-us-section/about';
@@ -18,12 +18,6 @@ export class Home {
   onWindowScroll() {
     this.scrollY = window.scrollY;
   }
-
-  rewardCards = [
-    { title: 'Easy Booking', description: 'Reserve your spot in just a few clicks.' },
-    { title: 'Popular Sessions', description: 'Join Yoga, HIIT, Pilates and more.' },
-    { title: 'Earn Points', description: 'Stay active and get rewarded.' },
-  ];
 
   constructor(private workoutService: WorkoutService) {}
 

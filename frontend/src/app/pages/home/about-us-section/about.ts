@@ -8,6 +8,4 @@ import { RouterLink } from '@angular/router';
   imports: [CommonModule, RouterLink],
   templateUrl: './about.html',
 })
-export class About {
-  @Input() darkMode = false;
-}
+export class About {}

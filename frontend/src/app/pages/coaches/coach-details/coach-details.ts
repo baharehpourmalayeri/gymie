@@ -1,41 +1,34 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { WorkoutService } from '../../../core/services/workout.service';
-import { Workout, WorkoutSession } from '../../../core/models/workout.model';
-import { FavoriteToggle } from '../../../shared/favorite/favorite-toggle';
-import { WorkoutScheduleService } from '../../../core/services/workout-schedule.service';
-import { WorkoutCalendar } from '../workout-calendar/workout-calendar';
+import { Coach } from '../../../core/models/coach.model';
+import { CoachService } from '../../../core/services/coach.service';
+import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
+import { CoachCalendar } from '../coach-calendar/coach-calendar';
 
 @Component({
-  selector: 'app-workout-detail',
+  selector: 'app-coach-detail',
   standalone: true,
-  imports: [CommonModule, FavoriteToggle, WorkoutCalendar],
-  templateUrl: './workout-detail.html',
+  imports: [CommonModule, CoachCalendar],
+  templateUrl: './coach-detail.html',
 })
-export class WorkoutDetail {
-  workout: Workout | undefined;
+export class CoachDetail {
+  coach: Coach | undefined;
   showCalendar: boolean = false;
   bookingConfirmed: boolean = false;
   bookedSessions: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private workoutService: WorkoutService,
-    private workoutScheduleService: WorkoutScheduleService,
+    private coachService: CoachService,
+    private coachScheduleService: CoachScheduleService,
   ) {}
   ngOnInit() {
     const slug = this.route.snapshot.paramMap.get('slug');
     if (slug) {
-      this.workout = this.workoutService.getBySlug(slug);
+      this.coach = this.coachService.getBySlug(slug);
     }
-    this.bookedSessions = this.workoutScheduleService.getUserBookings(this.workout);
-  }
-
-  onFavoriteChange(isFav: boolean) {
-    if (this.workout) {
-      this.workout.isFavorite = isFav;
-    }
+    this.bookedSessions = this.coachScheduleService.getUserBookings(this.coach);
   }
 
   onBookingConfirmed(session: any) {
@@ -60,7 +53,7 @@ export class WorkoutDetail {
 
     this.bookedSessions = this.bookedSessions.filter((bs) => bs.id !== confirmedId);
 
-    this.workoutScheduleService.cancelSession(confirmedId);
+    this.coachScheduleService.cancelSession(confirmedId);
 
     this.bookingConfirmed = false;
 

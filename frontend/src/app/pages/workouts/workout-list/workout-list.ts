@@ -2,14 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FavoriteToggle } from '../../../shared/favorite/favorite-toggle';
 import { Router } from '@angular/router';
-
-export interface Workout {
-  title: string;
-  description: string;
-  longDescription: string;
-  image: string;
-  isFavorite: boolean;
-}
+import { Workout } from '../../../core/models/workout.model';
 
 @Component({
   selector: 'app-workout-list',
@@ -23,6 +16,6 @@ export class WorkoutList {
   constructor(private router: Router) {}
 
   goToWorkout(workout: Workout) {
-    this.router.navigate(['/workout', workout.title]);
+    this.router.navigate(['/workout', workout.slug]);
   }
 }

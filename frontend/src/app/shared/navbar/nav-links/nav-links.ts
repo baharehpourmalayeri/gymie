@@ -15,5 +15,4 @@ interface Link {
 })
 export class NavLinks {
   @Input() links: Link[] = [];
-  @Input() darkMode = false;
 }
