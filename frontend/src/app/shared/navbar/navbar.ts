@@ -5,6 +5,7 @@ import { NavLinks } from './nav-links/nav-links';
 import { ProfileMenu } from './profile-menu/profile-menu';
 import { ToggleDarkMode } from './toggle/toggle';
 import { AuthService } from '../../core/services/auth.service';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +20,12 @@ export class Navbar {
 
   constructor(private authService: AuthService) {}
 
+  user$ = new Observable();
+
+  ngOnInit(): void {
+    this.user$ = this.authService.authState$.pipe(map((auth) => auth?.user ?? null));
+  }
+
   links = [
     { path: '/', label: 'Home' },
     { path: '/workouts', label: 'Workouts' },
@@ -31,12 +38,6 @@ export class Navbar {
     { label: 'Favorites', path: '/user/favorites' },
     { label: 'Logout', path: '/logout' },
   ];
-
-  user: any = null;
-
-  ngOnInit() {
-    this.user = this.authService.getLoggedInUser();
-  }
 
   onToggleDarkMode(value: boolean) {
     this.darkModeChange.emit(value);

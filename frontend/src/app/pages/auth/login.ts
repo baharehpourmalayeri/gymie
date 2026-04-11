@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +16,6 @@ export class Login {
   errorMessage = '';
   constructor(
     private authService: AuthService,
-    private cdr: ChangeDetectorRef,
     private router: Router,
   ) {}
 
@@ -31,7 +29,6 @@ export class Login {
         next: (res) => {
           console.log(res);
           this.authService.saveLoggedInUser(res);
-          this.cdr.detectChanges();
           this.router.navigate(['/']);
         },
         error: (err) => {

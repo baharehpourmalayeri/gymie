@@ -17,7 +17,7 @@
     <app-profile-menu
       [dropdownItems]="dropdownItems"
       [darkMode]="darkMode"
-      [user]="user"
+      [user]="user$ | async"
       (logout)="logout()"
     ></app-profile-menu>
 

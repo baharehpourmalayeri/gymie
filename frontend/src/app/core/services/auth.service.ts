@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthResponse } from '../../core/models/user.model';
 
 import { User } from '../models/user.model';
@@ -10,15 +10,16 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/users';
+  private authStateSubject = new BehaviorSubject<AuthResponse | null>(this.readStoredAuth());
+  authState$ = this.authStateSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
   saveLoggedInUser(res: AuthResponse) {
     localStorage.setItem('token', res.access_token);
-
-    localStorage.setItem('userId', res.user.id.toString());
-
     localStorage.setItem('user', JSON.stringify(res.user));
+
+    this.authStateSubject.next(res);
   }
 
   register(user: { name: string; email: string; password: string }): Observable<AuthResponse> {
@@ -32,6 +33,7 @@ export class AuthService {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.authStateSubject.next(null);
   }
 
   getUser(userId: number): Observable<User> {
@@ -39,8 +41,12 @@ export class AuthService {
   }
 
   getLoggedInUser(): AuthResponse | null {
-    let token = localStorage.getItem('token');
-    let user = localStorage.getItem('user');
+    return this.authStateSubject.value;
+  }
+
+  private readStoredAuth(): AuthResponse | null {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     if (!token || !user) {
       return null;
     }
