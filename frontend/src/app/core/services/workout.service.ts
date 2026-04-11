@@ -1,33 +1,74 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { Workout } from '../models/workout.model';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
-  constructor(private http: HttpClient) {}
+  private workoutsApiUrl = 'http://127.0.0.1:8000/workouts';
+  private favoritesApiUrl = 'http://127.0.0.1:8000/favorites';
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   getAll(): Observable<Workout[]> {
-    return this.http.get<Workout[]>('http://127.0.0.1:8000/workouts/');
+    return this.http.get<Workout[]>(`${this.workoutsApiUrl}/`, this.getAuthOptions());
   }
 
   getBySlug(slug: string): Observable<Workout> {
-    return this.http.get<Workout>(`http://127.0.0.1:8000/workouts/${slug}`);
+    return this.http.get<Workout>(`${this.workoutsApiUrl}/${slug}`, this.getAuthOptions());
   }
 
   getTop(n: number): Observable<Workout[]> {
-    return this.http.get<Workout[]>(`http://127.0.0.1:8000/workouts/?limit=${n}`);
+    return this.http.get<Workout[]>(`${this.workoutsApiUrl}/?limit=${n}`, this.getAuthOptions());
   }
 
   getFilteredWorkouts(filter: string): Observable<Workout[]> {
-    return this.http.get<Workout[]>(`http://127.0.0.1:8000/workouts/?filter=${filter}`);
+    return this.http.get<Workout[]>(
+      `${this.workoutsApiUrl}/?filter=${filter}`,
+      this.getAuthOptions(),
+    );
   }
 
-  getFavorites(): Workout[] {
-    return [];
+  getFavorites(): Observable<Workout[]> {
+    const authOptions = this.getAuthOptions();
+    if (!authOptions.headers) {
+      return throwError(() => new Error('Authentication required'));
+    }
+    return this.http.get<Workout[]>(`${this.favoritesApiUrl}/me`, authOptions);
   }
 
-  toggleFavorite(workout: Workout) {
-    workout.isFavorite = !workout.isFavorite;
+  favoriteWorkout(slug: string): Observable<unknown> {
+    const authOptions = this.getAuthOptions();
+    if (!authOptions.headers) {
+      return throwError(() => new Error('Authentication required'));
+    }
+    return this.http.post(`${this.favoritesApiUrl}/${slug}`, {}, authOptions);
   }
+
+  unfavoriteWorkout(slug: string): Observable<unknown> {
+    const authOptions = this.getAuthOptions();
+    if (!authOptions.headers) {
+      return throwError(() => new Error('Authentication required'));
+    }
+    return this.http.delete(`${this.favoritesApiUrl}/${slug}`, authOptions);
+  }
+
+  private getAuthOptions(): { headers?: HttpHeaders } {
+    const token = this.authService.getAccessToken();
+    if (!token) {
+      return {};
+    }
+
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    };
+  }
+
 }

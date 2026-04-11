@@ -44,6 +44,10 @@ export class AuthService {
     return this.authStateSubject.value;
   }
 
+  getAccessToken(): string | null {
+    return this.authStateSubject.value?.access_token ?? null;
+  }
+
   private readStoredAuth(): AuthResponse | null {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');

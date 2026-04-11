@@ -25,7 +25,6 @@ import { Workout } from '../../core/models/workout.model';
   `,
 })
 export class FavoriteToggle {
-  @Output() favoriteChange = new EventEmitter<boolean>();
   @Input() workout!: Workout;
 
   constructor(private workoutService: WorkoutService) {}
@@ -36,7 +35,22 @@ export class FavoriteToggle {
 
   toggle(event?: MouseEvent) {
     event?.stopPropagation();
-    this.workoutService.toggleFavorite(this.workout);
-    this.favoriteChange.emit(this.isFavorite);
+
+    const currentIsFavorite = this.workout.isFavorite;
+    const nextIsFavorite = !currentIsFavorite;
+
+    this.workout.isFavorite = nextIsFavorite;
+
+    const request$ = nextIsFavorite
+      ? this.workoutService.favoriteWorkout(this.workout.slug)
+      : this.workoutService.unfavoriteWorkout(this.workout.slug);
+
+    request$.subscribe({
+      next: () => {},
+      error: (error) => {
+        console.error(error);
+        this.workout.isFavorite = currentIsFavorite;
+      },
+    });
   }
 }
