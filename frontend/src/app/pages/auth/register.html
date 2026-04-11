@@ -2,7 +2,26 @@
   <div class="max-w-md w-full p-8 rounded-full-xl">
     <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
 
-    <form (ngSubmit)="register()" class="space-y-4">
+    @if (successMessage) {
+      <p class="text-green-600 text-center mb-4">{{ successMessage }}</p>
+    }
+
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1">Name</label>
+        <input
+          type="text"
+          [(ngModel)]="name"
+          name="name"
+          required
+          #nameModel="ngModel"
+          class="w-full border rounded-full px-3 py-2"
+        />
+        @if (nameModel.touched && name.trim().length < 2) {
+          <small class="text-red-500">Name must be at least 2 characters</small>
+        }
+      </div>
+
       <div>
         <label class="block text-sm font-medium mb-1">Email</label>
         <input
@@ -10,8 +29,13 @@
           [(ngModel)]="email"
           name="email"
           required
+          email
+          #emailModel="ngModel"
           class="w-full border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-green-300"
         />
+        @if (emailModel.invalid && emailModel.touched) {
+          <small class="text-red-600 text-sm mt-1">Please enter a valid email</small>
+        }
       </div>
 
       <div>
@@ -34,11 +58,15 @@
           required
           class="w-full border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-green-300"
         />
+        @if (password !== confirmPassword && confirmPassword) {
+          <div><small class="text-red-500">Passwords do not match</small></div>
+        }
       </div>
 
       <button
         type="submit"
-        class="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-700 transition cursor-pointer"
+        [disabled]="!isFormValid"
+        class="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-700 transition cursor-pointer disabled:bg-[#bbbbbb] disabled:cursor-not-allowed"
       >
         Register
       </button>
@@ -46,7 +74,7 @@
 
     <p class="mt-4 text-center text-sm">
       Already have an account?
-      <a href="/login" class="text-green-800 hover:underline">Login</a>
+      <a routerLink="/login" class="text-green-800 hover:underline">Login</a>
     </p>
   </div>
 </div>

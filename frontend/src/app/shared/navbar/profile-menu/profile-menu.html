@@ -1,25 +1,33 @@
-<div class="flex items-center">
-  <div class="relative" #profileDropdownRef>
+<div #profileDropdownRef>
+  @if (user) {
     <button
-      class="flex items-center justify-between px-2 py-1 w-20 h-10 rounded-full shadow-sm transition-all duration-200"
+      class="relative w-20 h-10 rounded-full flex items-center justify-center duration-300"
       [ngClass]="darkMode ? 'bg-[#202020] text-white' : 'bg-[#dadada] text-black'"
       (click)="toggleDropdown($event)"
     >
-      <img
-        src="/assets/nav/profile.jpg"
-        alt="Profile"
-        class="absolute top-0.5 left-0.5 rounded-full w-9 h-9"
-      />
-      <mat-icon
-        class="absolute top-0 right-2 text-sm focus:outline-none cursor-pointer translate-y-2.5"
-      >
+      @if (user.image) {
+        <div
+          class="absolute top-0.5 left-0.5 w-9 h-9 rounded-full shadow-md flex items-center justify-center overflow-hidden transition-transform duration-300"
+        >
+          <img [src]="user.image" alt="Profile" class="w-full h-full object-cover" />
+        </div>
+      } @else {
+        <div
+          class="absolute top-0.5 left-0.5 w-9 h-9 rounded-full shadow-md flex items-center justify-center transition-transform duration-300"
+          [ngClass]="darkMode ? 'bg-[#393939]' : 'bg-[#ececec]'"
+        >
+          <mat-icon class="text-2xl">account_circle</mat-icon>
+        </div>
+      }
+
+      <mat-icon class="absolute top-0 right-2 text-sm cursor-pointer translate-y-2.5">
         expand_more
       </mat-icon>
     </button>
 
     @if (profileDropdownOpen) {
       <div
-        class="absolute right-0 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
+        class="absolute right-28 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
         [ngClass]="darkMode ? 'bg-[#393939] text-[#e0e0e0]' : 'bg-[#dadada] text-black'"
       >
         @for (item of dropdownItems; track item.path) {
@@ -33,5 +41,13 @@
         }
       </div>
     }
-  </div>
+  } @else {
+    <a
+      routerLink="/login"
+      class="relative w-20 h-10 rounded-full flex items-center justify-center shadow-sm"
+      [ngClass]="darkMode ? 'bg-[#202020] text-white' : 'bg-[#dadada] text-gray-700'"
+    >
+      Login
+    </a>
+  }
 </div>

@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { NavLinks } from './nav-links/nav-links';
 import { ProfileMenu } from './profile-menu/profile-menu';
 import { ToggleDarkMode } from './toggle/toggle';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,6 +16,8 @@ import { ToggleDarkMode } from './toggle/toggle';
 export class Navbar {
   @Input() darkMode = false;
   @Output() darkModeChange = new EventEmitter<boolean>();
+
+  constructor(private authService: AuthService) {}
 
   links = [
     { path: '/', label: 'Home' },
@@ -28,6 +31,12 @@ export class Navbar {
     { label: 'Favorites', path: '/user/favorites' },
     { label: 'Logout', path: '/logout' },
   ];
+
+  user: any = null;
+
+  ngOnInit() {
+    this.user = this.authService.getLoggedInUser();
+  }
 
   onToggleDarkMode(value: boolean) {
     this.darkModeChange.emit(value);

@@ -33,7 +33,6 @@ def get_user_by_username(name: str, db: Session):
 
 
 def register_user(user: UserCreate, db: Session):
-    # Check email
     if get_user_by_email(user.email, db):
         raise HTTPException(
             status_code=400,
@@ -49,17 +48,28 @@ def register_user(user: UserCreate, db: Session):
 
     hashed_password = hash_password(user.password)
 
-    db_user = User(
+    user = User(
         name=user.name,
         email=user.email,
         password=hashed_password
     )
 
-    db.add(db_user)
+    db.add(user)
     db.commit()
-    db.refresh(db_user)
+    db.refresh(user)
 
-    return db_user
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+
+    access_token = create_access_token(
+        data={"sub": user.id},
+        expires_delta=access_token_expires
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user": user
+    }
 
 
 def login_user(credentials: UserLogin, db: Session):

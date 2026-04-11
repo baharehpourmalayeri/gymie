@@ -21,6 +21,7 @@ export class ProfileMenu {
   @Input() dropdownItems: { label: string; path: string }[] = [];
   @Input() darkMode = false;
   @Output() logout = new EventEmitter<void>();
+  @Input() user: any = null;
 
   profileDropdownOpen = false;
   @ViewChild('profileDropdownRef') profileDropdownRef!: ElementRef;

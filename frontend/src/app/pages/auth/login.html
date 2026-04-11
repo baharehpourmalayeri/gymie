@@ -2,6 +2,10 @@
   <div class="max-w-md w-full p-8">
     <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
+    @if (errorMessage) {
+      <p class="text-red-600 text-center mb-4">{{ errorMessage }}</p>
+    }
+
     <form (ngSubmit)="login()" class="space-y-4">
       <div>
         <label class="block text-sm font-medium mb-1">Email</label>
@@ -25,14 +29,18 @@
         />
       </div>
 
-      <button type="submit" class="universal-button w-full py-2 transition cursor-pointer">
+      <button
+        type="submit"
+        [disabled]="!email || !password"
+        class="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-700 transition cursor-pointer disabled:bg-[#bbbbbb] disabled:cursor-not-allowed"
+      >
         Login
       </button>
     </form>
 
     <p class="mt-4 text-center text-sm">
       Don’t have an account?
-      <a href="/register" class="text-green-800 hover:underline cursor-pointer">Register</a>
+      <a routerLink="/register" class="text-green-800 hover:underline cursor-pointer">Register</a>
     </p>
   </div>
 </div>
