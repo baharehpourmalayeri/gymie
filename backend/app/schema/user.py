@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from datetime import datetime
 
 
 class UserCreate(BaseModel):
@@ -26,17 +25,3 @@ class TokenResponse(BaseModel):
     access_token: str
     token_type: str
     user: UserResponse
-
-
-class FavoriteBase(BaseModel):
-    user_id: int
-    class_id: int
-
-class FavoriteCreate(FavoriteBase):
-    pass
-
-class FavoriteResponse(FavoriteBase):
-    id: int
-
-    class Config:
-        orm_mode = True
