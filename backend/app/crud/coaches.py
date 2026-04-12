@@ -1,7 +1,8 @@
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.model.coaches import Coach, CoachSession
-from app.schema.coaches import CoachResponse, CoachSessionResponse
+from app.model.bookings import Booking
+from app.schema.coaches import CoachBase, CoachResponse, CoachSessionResponse
 from fastapi import HTTPException
 
 
@@ -40,9 +41,20 @@ def get_coach(slug: str, db: Session):
     )
 
 
-def get_sessions(slug: str, db: Session):
+def get_sessions(slug: str, db: Session, user_id: int | None = None):
     sessions = db.query(CoachSession).join(
         Coach).filter(Coach.slug == slug).all()
+
+    booked_session_ids: set[int] = set()
+    if user_id is not None:
+        booked_session_ids = {
+            coach_session_id for (coach_session_id,) in db.query(Booking.coach_session_id).filter(
+                Booking.user_id == user_id,
+                Booking.coach_session_id != None
+            ).all()
+        }
+
+    print(booked_session_ids)
 
     result = []
     for s in sessions:
@@ -50,10 +62,16 @@ def get_sessions(slug: str, db: Session):
         result.append(
             CoachSessionResponse(
                 id=s.id,
-                coachId=s.coach_id,
+                coach=CoachBase(
+                    id=s.coach.id,
+                    slug=s.coach.slug,
+                    title=s.coach.title,
+                    name=s.coach.name,
+                    image=s.coach.image,
+                ),
                 start=s.start_date,
                 end=s.end_date,
-                isBooked=False
+                isBooked=s.id in booked_session_ids
             )
         )
     return result

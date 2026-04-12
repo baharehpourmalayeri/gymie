@@ -2,13 +2,16 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class WorkoutResponse(BaseModel):
+class WorkoutBase (BaseModel):
     id: int
     slug: str
     title: str
     description: str
-    longDescription: str
     image: str | None = None
+
+
+class WorkoutResponse(WorkoutBase):
+    longDescription: str
     isFavorite: bool = False
 
     class Config:
@@ -17,7 +20,7 @@ class WorkoutResponse(BaseModel):
 
 class WorkoutSessionResponse(BaseModel):
     id: int
-    workoutId: int
+    workout: WorkoutBase
     start: datetime
     end: datetime
     capacity: int

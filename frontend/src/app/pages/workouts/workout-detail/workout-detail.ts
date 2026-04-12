@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WorkoutService } from '../../../core/services/workout.service';
-import { Workout, WorkoutSession } from '../../../core/models/workout.model';
+import { Workout } from '../../../core/models/workout.model';
 import { FavoriteToggle } from '../../../shared/favorite/favorite-toggle';
 import { WorkoutScheduleService } from '../../../core/services/workout-schedule.service';
 import { WorkoutCalendar } from '../workout-calendar/workout-calendar';

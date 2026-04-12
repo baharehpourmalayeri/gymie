@@ -10,9 +10,9 @@ import {
 import { CalendarOptions } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { Coach, CoachSession } from '../../../core/models/coach.model';
+import { Coach, CoachSession, BookedCoachSession } from '../../../core/models/coach.model';
 import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-coach-calendar',
   standalone: true,
@@ -21,9 +21,9 @@ import { CoachScheduleService } from '../../../core/services/coach-schedule.serv
 })
 export class CoachCalendar implements OnInit, OnChanges {
   @Input() coach!: Coach;
-  @Input() bookedSessions!: CoachSession[];
-  @Output() bookingConfirmed = new EventEmitter<CoachSession>();
-  @Output() bookingCanceled = new EventEmitter<string>();
+  @Input() bookedSessions!: BookedCoachSession[];
+  @Output() bookingConfirmed = new EventEmitter<BookedCoachSession>();
+  @Output() bookingCanceled = new EventEmitter<number>();
 
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
@@ -35,7 +35,10 @@ export class CoachCalendar implements OnInit, OnChanges {
     height: '100%',
   };
 
-  constructor(private coachScheduleService: CoachScheduleService) {}
+  constructor(
+    private coachScheduleService: CoachScheduleService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.loadAvailableSessions();
@@ -49,15 +52,14 @@ export class CoachCalendar implements OnInit, OnChanges {
     }
   }
   loadAvailableSessions() {
-    this.coachScheduleService.getSchedule(this.coach).subscribe((allSessions) => {
+    this.coachScheduleService.getSchedule(this.coach.slug).subscribe((allSessions) => {
       const events = allSessions.map((s) => {
         const sessionId = s.id;
-        const isBooked = this.bookedSessions.find((bs) => bs.id === sessionId);
 
         let title = '';
         let backgroundColor = '';
 
-        if (isBooked) {
+        if (s.isBooked) {
           title = `Your Booking: ${this.coach.name}`;
           backgroundColor = 'blue';
         } else {
@@ -70,32 +72,36 @@ export class CoachCalendar implements OnInit, OnChanges {
           title,
           start: s.start,
           end: s.end,
+          session: s,
           backgroundColor,
           extendedProps: { ...s },
         };
       });
 
       this.calendarOptions.events = events;
+      this.cdr.detectChanges();
     });
   }
 
   handleEventClick(info: any) {
+    console.log(info.event.extendedProps);
     const event = info.event;
-    const sessionId = event.id;
+    const session = event.extendedProps;
+    const sessionId = session.id;
+    const coachId = session.coach.id;
 
-    let session: CoachSession | undefined;
-
-    session = this.coachScheduleService.getSessionById(sessionId);
-
-    if (!session) return;
-
-    const alreadyBooked = this.bookedSessions.find((bs) => bs.id === sessionId);
+    const alreadyBooked = session.isBooked;
     if (alreadyBooked) {
+      const bookedSession: BookedCoachSession = this.bookedSessions.filter(
+        (bs) => (bs.session_id = sessionId),
+      )[0];
       const cancel = window.confirm(`You booked ${this.coach.name}. Cancel it?`);
       if (cancel) {
-        this.coachScheduleService.cancelSession(sessionId);
-        this.bookingCanceled.emit(sessionId);
-        alert('Booking canceled!');
+        this.coachScheduleService.cancelSession(bookedSession.id).subscribe((r) => {
+          this.cdr.detectChanges();
+          this.bookingCanceled.emit(bookedSession.id);
+          alert('Booking canceled!');
+        });
       }
       return;
     }
@@ -108,10 +114,11 @@ export class CoachCalendar implements OnInit, OnChanges {
     const confirmBooking = window.confirm(`Do you want to book ${this.coach.name}?`);
     if (!confirmBooking) return;
 
-    this.coachScheduleService.bookSession(sessionId);
-
-    this.bookingConfirmed.emit({ ...session, id: sessionId });
-    this.loadAvailableSessions();
-    alert('Booked successfully!');
+    this.coachScheduleService.bookSession(coachId, sessionId).subscribe((r: BookedCoachSession) => {
+      this.cdr.detectChanges();
+      this.bookingConfirmed.emit({ ...r });
+      this.loadAvailableSessions();
+      alert('Booked successfully!');
+    });
   }
 }

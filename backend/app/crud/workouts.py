@@ -2,7 +2,8 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from app.model.workouts import Workout, WorkoutSession
 from app.model.user import Favorite
-from app.schema.workouts import WorkoutResponse, WorkoutSessionResponse
+from app.model.bookings import Booking
+from app.schema.workouts import WorkoutBase, WorkoutResponse, WorkoutSessionResponse
 from fastapi import HTTPException
 
 
@@ -64,22 +65,36 @@ def get_workout(slug: str, db: Session, user_id: int | None = None):
     )
 
 
-def get_sessions(slug: str, db: Session):
+def get_sessions(slug: str, db: Session,  user_id: int | None = None):
     sessions = db.query(WorkoutSession).join(
         Workout).filter(Workout.slug == slug).all()
 
+    booked_session_ids: set[int] = set()
+    if user_id is not None:
+        booked_session_ids = {
+            workout_session_id for (workout_session_id,) in db.query(Booking.workout_session_id).filter(
+                Booking.user_id == user_id,
+                Booking.workout_session_id != None
+            ).all()
+        }
+
     result = []
     for s in sessions:
-
         result.append(
             WorkoutSessionResponse(
                 id=s.id,
-                workoutId=s.workout_id,
+                workout=WorkoutBase(
+                    id=s.workout.id,
+                    slug=s.workout.slug,
+                    title=s.workout.title,
+                    description=s.workout.description,
+                    image=s.workout.image,
+                ),
                 start=s.start_date,
                 end=s.end_date,
                 capacity=s.capacity,
                 booked=s.booked,
-                isBooked=False
+                isBooked=s.id in booked_session_ids
             )
         )
     return result

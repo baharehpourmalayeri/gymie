@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Workout } from '../models/workout.model';
 import { WorkoutSession } from '../models/workout.model';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutScheduleService {
-  constructor(private http: HttpClient) {}
+  private workoutSessionApiUrl = 'http://127.0.0.1:8000/workouts';
+
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   private bookedSessions: WorkoutSession[] = [];
 
-  getSchedule(workout: Workout): Observable<WorkoutSession[]> {
+  getSchedule(slug: string): Observable<WorkoutSession[]> {
     return this.http.get<WorkoutSession[]>(
-      `http://127.0.0.1:8000/workouts/${workout.slug}/sessions`,
+      `${this.workoutSessionApiUrl}/${slug}/sessions`,
+      this.getAuthOptions(),
     );
   }
 
@@ -35,8 +41,21 @@ export class WorkoutScheduleService {
 
   getUserBookings(workout?: Workout): WorkoutSession[] {
     if (workout) {
-      return this.bookedSessions.filter((s) => s.workoutId === workout.id);
+      return this.bookedSessions.filter((s) => s.workout.id === workout.id);
     }
     return this.bookedSessions;
+  }
+
+  private getAuthOptions(): { headers?: HttpHeaders } {
+    const token = this.authService.getAccessToken();
+    if (!token) {
+      return {};
+    }
+
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      }),
+    };
   }
 }

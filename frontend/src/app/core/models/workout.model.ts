@@ -10,7 +10,7 @@ export interface Workout {
 
 export interface WorkoutSession {
   id: string;
-  workoutId: string;
+  workout: Workout;
   start: string;
   end: string;
   capacity: number;

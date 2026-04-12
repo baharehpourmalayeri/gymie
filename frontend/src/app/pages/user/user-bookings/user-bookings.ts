@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { BookingService } from '../../../core/services/booking.service';
-import { Booking } from '../../../core/models/booking.model';
+import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
+import { BookedCoachSession, CoachSession } from '../../../core/models/coach.model';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-bookings',
@@ -10,15 +11,19 @@ import { CommonModule, DatePipe } from '@angular/common';
   templateUrl: './user-bookings.html',
 })
 export class UserBookings implements OnInit {
-  bookings: Booking[] = [];
+  bookings: BookedCoachSession[] = [];
   loading = true;
 
-  constructor(private bookingService: BookingService) {}
+  constructor(
+    private coachScheduleService: CoachScheduleService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
-    this.bookingService.getUserBookings().subscribe((data) => {
+    this.coachScheduleService.getUserBookings().subscribe((data) => {
       this.bookings = data;
       this.loading = false;
+      this.cdr.detectChanges();
     });
   }
 

@@ -35,5 +35,6 @@ def get_workout(
 
 
 @router.get("/{slug}/sessions")
-def get_workout_sessions(slug: str, db: Session = Depends(get_db)):
-    return crud_workouts.get_sessions(slug, db)
+def get_workout_sessions(slug: str, token_data: dict | None = Depends(verify_token_optional), db: Session = Depends(get_db)):
+    user_id = int(token_data["user_id"]) if token_data else None
+    return crud_workouts.get_sessions(slug, db, user_id)

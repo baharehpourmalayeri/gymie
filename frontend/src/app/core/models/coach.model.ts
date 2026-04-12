@@ -9,8 +9,16 @@ export interface Coach {
 
 export interface CoachSession {
   id: string;
-  coachId: string;
+  coach: Coach;
   start: string;
   end: string;
   isBooked: boolean;
+}
+
+export interface BookedCoachSession {
+  id: number;
+  session_id: number;
+  coach: Coach;
+  start: string;
+  end: string;
 }

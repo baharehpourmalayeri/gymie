@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { Workout } from '../models/workout.model';
 import { AuthService } from './auth.service';
 

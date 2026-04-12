@@ -34,7 +34,7 @@
             class="mt-2 p-4 bg-green-100 text-green-800 rounded-xl flex justify-between items-center"
           >
             <div>
-              Successfully booked <strong>{{ session.workoutTitle }}</strong> on
+              Successfully booked <strong>{{ session.coach.title }}</strong> on
               {{ session.start | date: 'short' }}!
             </div>
             <button

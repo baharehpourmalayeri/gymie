@@ -1,4 +1,7 @@
 from pydantic import BaseModel
+from datetime import datetime
+from app.schema.coaches import CoachBase
+from app.schema.workouts import WorkoutBase
 
 
 class WorkoutBookingCreate(BaseModel):
@@ -13,7 +16,12 @@ class CoachBookingCreate(BaseModel):
 
 class WorkoutBookingResponse(BaseModel):
     id: int
-    workout_id: int
+    session_id: int
+    workout: WorkoutBase
+    start: datetime
+    end: datetime
+    capacity: int
+    booked: int
 
     class Config:
         orm_mode = True
@@ -21,7 +29,10 @@ class WorkoutBookingResponse(BaseModel):
 
 class CoachBookingResponse(BaseModel):
     id: int
-    coach_id: int
+    session_id: int
+    coach: CoachBase
+    start: datetime
+    end: datetime
 
     class Config:
         orm_mode = True

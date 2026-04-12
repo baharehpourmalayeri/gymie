@@ -5,13 +5,13 @@
     @for (booking of bookings; track booking.id) {
       <div class="relative rounded-xl overflow-hidden shadow-lg flex flex-col">
         <img
-          [src]="booking.image || '/assets/default-workout.jpg'"
-          alt="{{ booking.workout }}"
+          [src]="booking.coach.image || '/assets/default-workout.jpg'"
+          alt="{{ booking.coach.title }}"
           class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div class="universal-card p-4 flex flex-col justify-between flex-1">
-          <h2 class="text-m font-bold">{{ booking.workout }}</h2>
-          <p>Coach: {{ booking.coachName }}</p>
+          <h2 class="text-m font-bold">{{ booking.coach.title }}</h2>
+          <p>Coach: {{ booking.coach.name }}</p>
           <p class="text-gray-500 mt-1">
             {{ booking.start | date: 'mediumDate' }}
           </p>
@@ -19,14 +19,6 @@
             From {{ booking.start | date: 'shortTime' }} to {{ booking.end | date: 'shortTime' }}
           </p>
         </div>
-
-        <span
-          class="absolute top-2 right-1 px-1 py-1 rounded-full text-sm {{
-            getStatusColor(booking.status)
-          }} bg-white/80 backdrop-blur-sm"
-        >
-          {{ booking.status | titlecase }}
-        </span>
       </div>
     }
   </div>

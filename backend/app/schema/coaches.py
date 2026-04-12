@@ -2,13 +2,16 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class CoachResponse(BaseModel):
+class CoachBase(BaseModel):
     id: int
     slug: str
-    name: str
     title: str
-    bio: str
+    name: str
     image: str | None = None
+
+
+class CoachResponse(CoachBase):
+    bio: str
 
     class Config:
         orm_mode = True
@@ -16,7 +19,7 @@ class CoachResponse(BaseModel):
 
 class CoachSessionResponse(BaseModel):
     id: int
-    coachId: int
+    coach: CoachBase
     start: datetime
     end: datetime
     isBooked: bool

@@ -12,6 +12,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { Workout, WorkoutSession } from '../../../core/models/workout.model';
 import { WorkoutScheduleService } from '../../../core/services/workout-schedule.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-workout-calendar',
@@ -35,7 +36,10 @@ export class WorkoutCalendar implements OnInit, OnChanges {
     height: '100%',
   };
 
-  constructor(private workoutScheduleService: WorkoutScheduleService) {}
+  constructor(
+    private workoutScheduleService: WorkoutScheduleService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     this.loadAvailableSessions();
@@ -49,7 +53,7 @@ export class WorkoutCalendar implements OnInit, OnChanges {
     }
   }
   loadAvailableSessions() {
-    this.workoutScheduleService.getSchedule(this.workout).subscribe((allSessions) => {
+    this.workoutScheduleService.getSchedule(this.workout.slug).subscribe((allSessions) => {
       const events = allSessions.map((s) => {
         const sessionId = s.id;
         const isBooked = this.bookedSessions.find((bs) => bs.id === sessionId);
@@ -77,6 +81,7 @@ export class WorkoutCalendar implements OnInit, OnChanges {
       });
 
       this.calendarOptions.events = events;
+      this.cdr.detectChanges();
     });
   }
 

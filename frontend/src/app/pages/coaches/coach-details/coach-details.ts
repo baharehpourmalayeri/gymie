@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Coach } from '../../../core/models/coach.model';
+import { Coach, BookedCoachSession } from '../../../core/models/coach.model';
 import { CoachService } from '../../../core/services/coach.service';
 import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
 import { CoachCalendar } from '../coach-calendar/coach-calendar';
@@ -17,7 +17,7 @@ export class CoachDetail {
   coach: Coach | undefined;
   showCalendar: boolean = false;
   bookingConfirmed: boolean = false;
-  bookedSessions: any[] = [];
+  bookedSessions: BookedCoachSession[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -30,25 +30,27 @@ export class CoachDetail {
     if (slug) {
       this.coachService.getBySlug(slug).subscribe((coach) => {
         this.coach = coach;
+        this.coachScheduleService.getUserBookings(this.coach).subscribe((bookings) => {
+          this.bookedSessions = bookings;
+          this.cdr.detectChanges();
+        });
         this.cdr.detectChanges();
       });
     }
-    this.bookedSessions = this.coachScheduleService.getUserBookings(this.coach);
   }
 
-  onBookingConfirmed(session: any) {
+  onBookingConfirmed(bookedSession: BookedCoachSession) {
+    this.bookedSessions.push(bookedSession);
     this.bookingConfirmed = true;
     this.showCalendar = false;
-
-    const exists = this.bookedSessions.find((bs) => bs.id === session.id);
-    if (!exists) this.bookedSessions.push(session);
+    this.cdr.detectChanges();
   }
 
-  onBookingCanceled(sessionId: string) {
-    this.bookedSessions = this.bookedSessions.filter((bs) => bs.id !== sessionId);
+  onBookingCanceled(bookingId: number) {
+    this.bookedSessions = this.bookedSessions.filter((bs) => bs.id !== bookingId);
   }
 
-  cancelConfirmedBooking(session: any) {
+  cancelConfirmedBooking(session: BookedCoachSession) {
     if (!session) return;
 
     const confirmedId = session.id;
@@ -56,12 +58,10 @@ export class CoachDetail {
     const ok = window.confirm('Are you sure you want to cancel this booking?');
     if (!ok) return;
 
-    this.bookedSessions = this.bookedSessions.filter((bs) => bs.id !== confirmedId);
-
-    this.coachScheduleService.cancelSession(confirmedId);
-
-    this.bookingConfirmed = false;
-
-    this.onBookingCanceled(confirmedId);
+    this.coachScheduleService.cancelSession(confirmedId).subscribe((r) => {
+      this.bookingConfirmed = false;
+      this.onBookingCanceled(confirmedId);
+      this.cdr.detectChanges();
+    });
   }
 }
