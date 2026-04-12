@@ -1,18 +1,27 @@
 from pydantic import BaseModel
-from datetime import datetime
 
 
-class BookingBase(BaseModel):
-    user_id: int
-    class_id: int
+class WorkoutBookingCreate(BaseModel):
+    workout_id: int
+    workout_session_id: int
 
 
-class BookingCreate(BookingBase):
-    pass
+class CoachBookingCreate(BaseModel):
+    coach_id: int
+    coach_session_id: int
 
 
-class BookingResponse(BookingBase):
+class WorkoutBookingResponse(BaseModel):
     id: int
+    workout_id: int
+
+    class Config:
+        orm_mode = True
+
+
+class CoachBookingResponse(BaseModel):
+    id: int
+    coach_id: int
 
     class Config:
         orm_mode = True

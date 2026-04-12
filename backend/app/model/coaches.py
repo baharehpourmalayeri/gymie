@@ -23,4 +23,5 @@ class CoachSession(Base):
     start_date = Column(DateTime)
     end_date = Column(DateTime)
 
+    bookings = relationship("Booking", back_populates="coach_session")
     coach = relationship("Coach", back_populates="sessions")

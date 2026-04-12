@@ -26,4 +26,5 @@ class WorkoutSession(Base):
     capacity = Column(Integer)
     booked = Column(Integer)
 
+    bookings = relationship("Booking", back_populates="workout_session")
     workout = relationship("Workout", back_populates="sessions")
