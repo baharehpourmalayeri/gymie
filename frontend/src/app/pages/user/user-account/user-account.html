@@ -1,12 +1,7 @@
 <div class="page-content w-100">
   <div class="flex flex-col items-center mb-6">
-    <img
-      [src]="profileImageUrl"
-      alt="Profile Image"
-      class="w-24 h-24 rounded-full mb-2 object-cover border"
-    />
-    <div class="w-40 mt-2">
-      <input type="file" accept="image/*" class="mx-auto cursor-pointer" />
+    <div class="avatar">
+      <mat-icon class="text-black!">account_circle</mat-icon>
     </div>
   </div>
   <form [formGroup]="profileForm" class="space-y-2 mb-18">
@@ -53,7 +48,11 @@
       />
     </div>
 
-    <button type="submit" class="universal-button py-2 px-4 rounded-lg mt-4 cursor-pointer">
+    <button
+      type="submit"
+      class="universal-button py-2 px-4 rounded-lg mt-4 cursor-pointer"
+      (click)="handleChangePassword()"
+    >
       Save Changes
     </button>
   </form>

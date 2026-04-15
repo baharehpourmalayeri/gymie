@@ -28,7 +28,7 @@ export class Login {
       .subscribe({
         next: (res) => {
           console.log(res);
-          this.authService.saveLoggedInUser(res);
+          this.authService.handleLogin(res);
           this.router.navigate(['/']);
         },
         error: (err) => {

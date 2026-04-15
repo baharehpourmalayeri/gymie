@@ -13,6 +13,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { Coach, CoachSession, BookedCoachSession } from '../../../core/models/coach.model';
 import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 @Component({
   selector: 'app-coach-calendar',
   standalone: true,
@@ -38,6 +39,7 @@ export class CoachCalendar implements OnInit, OnChanges {
   constructor(
     private coachScheduleService: CoachScheduleService,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -84,6 +86,10 @@ export class CoachCalendar implements OnInit, OnChanges {
   }
 
   handleEventClick(info: any) {
+    if (!this.authService.isLoggedIn()) {
+      alert('Authentication is required!');
+      return;
+    }
     console.log(info.event.extendedProps);
     const event = info.event;
     const session = event.extendedProps;

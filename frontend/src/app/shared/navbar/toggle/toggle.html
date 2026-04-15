@@ -9,9 +9,9 @@
       [ngClass]="darkMode ? 'bg-[#393939] text-white translate-x-10' : 'bg-[#ececec] text-black'"
     >
       @if (!darkMode) {
-        <span>☀️</span>
+        <mat-icon class="icon-sm !text-yellow-600">light_mode</mat-icon>
       } @else {
-        <span>🌙</span>
+        <mat-icon class="icon-sm !text-yellow-200">dark_mode</mat-icon>
       }
     </div>
   </button>

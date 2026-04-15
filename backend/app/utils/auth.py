@@ -91,4 +91,8 @@ def verify_token_optional(
     """Decode JWT if present; allow anonymous requests when no token is provided."""
     if credentials is None:
         return None
-    return verify_token(credentials)
+
+    try:
+        return verify_token(credentials)
+    except HTTPException:
+        return None

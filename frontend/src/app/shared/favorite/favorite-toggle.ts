@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { WorkoutService } from '../../core/services/workout.service';
 import { Workout } from '../../core/models/workout.model';
@@ -48,7 +48,7 @@ export class FavoriteToggle {
     request$.subscribe({
       next: () => {},
       error: (error) => {
-        console.error(error);
+        alert('Authentication is required!');
         this.workout.isFavorite = currentIsFavorite;
       },
     });

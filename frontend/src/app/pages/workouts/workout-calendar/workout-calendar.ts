@@ -13,6 +13,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { BookedWorkoutSession, Workout } from '../../../core/models/workout.model';
 import { WorkoutScheduleService } from '../../../core/services/workout-schedule.service';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-workout-calendar',
@@ -39,6 +40,7 @@ export class WorkoutCalendar implements OnInit, OnChanges {
   constructor(
     private workoutScheduleService: WorkoutScheduleService,
     private cdr: ChangeDetectorRef,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
@@ -86,6 +88,10 @@ export class WorkoutCalendar implements OnInit, OnChanges {
   }
 
   handleEventClick(info: any) {
+    if (!this.authService.isLoggedIn()) {
+      alert('Authentication is required!');
+      return;
+    }
     const event = info.event;
     const session = event.extendedProps;
     const sessionId = event.id;
@@ -115,13 +121,13 @@ export class WorkoutCalendar implements OnInit, OnChanges {
     const confirmBooking = window.confirm(`Do you want to book ${this.workout.title}?`);
     if (!confirmBooking) return;
 
-    this.workoutScheduleService
-      .bookSession(workoutId, sessionId)
-      .subscribe((r: BookedWorkoutSession) => {
+    this.workoutScheduleService.bookSession(workoutId, sessionId).subscribe({
+      next: (r: BookedWorkoutSession) => {
         this.cdr.detectChanges();
         this.bookingConfirmed.emit({ ...r });
         this.loadAvailableSessions();
         alert('Booked successfully!');
-      });
+      },
+    });
   }
 }
