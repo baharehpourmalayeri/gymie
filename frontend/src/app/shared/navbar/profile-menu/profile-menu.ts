@@ -10,6 +10,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-menu',
@@ -18,10 +19,16 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './profile-menu.html',
 })
 export class ProfileMenu {
-  @Input() dropdownItems: { label: string; path: string }[] = [];
+  @Input() dropdownItems: {
+    label: string;
+    path?: string;
+    action?: string;
+  }[] = [];
   @Input() darkMode = false;
   @Output() logout = new EventEmitter<void>();
   @Input() user: any = null;
+
+  constructor(private router: Router) {}
 
   profileDropdownOpen = false;
   @ViewChild('profileDropdownRef') profileDropdownRef!: ElementRef;
@@ -35,6 +42,19 @@ export class ProfileMenu {
   closeDropdown(event: Event) {
     if (this.profileDropdownRef && !this.profileDropdownRef.nativeElement.contains(event.target)) {
       this.profileDropdownOpen = false;
+    }
+  }
+
+  onItemClick(item: any) {
+    this.profileDropdownOpen = false;
+
+    if (item.action === 'logout') {
+      this.logout.emit();
+      return;
+    }
+
+    if (item.path) {
+      this.router.navigate([item.path]);
     }
   }
 }

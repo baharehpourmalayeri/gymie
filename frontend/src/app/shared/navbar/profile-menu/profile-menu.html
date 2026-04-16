@@ -30,11 +30,11 @@
         class="absolute right-28 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
         [ngClass]="darkMode ? 'bg-[#393939] text-[#e0e0e0]' : 'bg-[#dadada] text-black'"
       >
-        @for (item of dropdownItems; track item.path) {
+        @for (item of dropdownItems; track item.label) {
           <a
-            [routerLink]="item.path"
             class="block px-4 py-2 transition cursor-pointer"
             [ngClass]="darkMode ? 'hover:bg-[#2c2c2c]' : 'hover:bg-[#b5b5b5]'"
+            (click)="onItemClick(item)"
           >
             {{ item.label }}
           </a>

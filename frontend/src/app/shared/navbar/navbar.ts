@@ -6,6 +6,7 @@ import { ProfileMenu } from './profile-menu/profile-menu';
 import { ToggleDarkMode } from './toggle/toggle';
 import { AuthService } from '../../core/services/auth.service';
 import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,10 @@ export class Navbar {
   @Input() darkMode = false;
   @Output() darkModeChange = new EventEmitter<boolean>();
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   user$ = new Observable();
 
@@ -36,7 +40,7 @@ export class Navbar {
     { label: 'My Account', path: '/user/account' },
     { label: 'Bookings', path: '/user/bookings' },
     { label: 'Favorites', path: '/user/favorites' },
-    { label: 'Logout', path: '/logout' },
+    { label: 'Logout', action: 'logout' },
   ];
 
   onToggleDarkMode(value: boolean) {
@@ -44,6 +48,11 @@ export class Navbar {
   }
 
   logout() {
-    console.log('Logging out...');
+    const confirmed = window.confirm('Are you sure you want to logout?');
+
+    if (!confirmed) return;
+
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

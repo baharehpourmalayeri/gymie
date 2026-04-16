@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-user-account',
@@ -14,10 +15,12 @@ export class UserAccount implements OnInit {
   profileForm: FormGroup;
   profileImageUrl: string | null = null;
   selectedFile: File | null = null;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.profileForm = this.fb.group({
       name: ['', Validators.required],
@@ -50,8 +53,14 @@ export class UserAccount implements OnInit {
     const newPassword = this.profileForm.get('newPassword')?.value ?? '';
     const confirmNewPassword = this.profileForm.get('confirmNewPassword')?.value ?? '';
 
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      this.errorMessage = 'All password fields are required';
+      return;
+    }
+
     this.authService.changePassword(currentPassword, newPassword, confirmNewPassword).subscribe({
       next: (res) => {
+        this.errorMessage = '';
         this.profileForm.patchValue({
           currentPassword: '',
           newPassword: '',
@@ -61,7 +70,10 @@ export class UserAccount implements OnInit {
         alert('Password is updated successfully!');
       },
       error: (err) => {
-        alert(err.error.detail);
+        console.log('ERROR FULL:', err);
+        console.log('ERROR BODY:', err.error);
+        this.errorMessage = err.error?.detail || err.error?.message || 'Password change failed';
+        this.cdr.detectChanges();
       },
     });
   }

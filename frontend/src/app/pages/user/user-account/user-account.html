@@ -4,13 +4,17 @@
       <mat-icon class="text-black!">account_circle</mat-icon>
     </div>
   </div>
-  <form [formGroup]="profileForm" class="space-y-2 mb-18">
+  @if (errorMessage) {
+    <p class="text-red-600 text-center mb-4">{{ errorMessage }}</p>
+  }
+  <form [formGroup]="profileForm" class="space-y-2 mb-18" (ngSubmit)="handleChangePassword()">
     <div>
       <label class="block text-sm font-medium mb-1">Full Name</label>
       <input
         type="text"
         formControlName="name"
-        class="universal-card w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
+        readonly
+        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
       />
     </div>
 
@@ -19,40 +23,35 @@
       <input
         type="email"
         formControlName="email"
-        class="universal-card w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring"
+        readonly
+        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
       />
     </div>
 
-    <div class="border-t pt-4 mt-4">
-      <h3 class="text-sm font-semibold mb-2">Change Password</h3>
+    <h3 class="text-sm font-semibold mb-2">Change Password</h3>
 
-      <input
-        type="password"
-        placeholder="CurrentPassword"
-        formControlName="currentPassword"
-        class="universal-card w-full px-3 py-2 border rounded-lg mb-2"
-      />
+    <input
+      type="password"
+      placeholder="CurrentPassword"
+      formControlName="currentPassword"
+      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
+    />
 
-      <input
-        type="password"
-        placeholder="New Password"
-        formControlName="newPassword"
-        class="universal-card w-full px-3 py-2 border rounded-lg mb-2"
-      />
+    <input
+      type="password"
+      placeholder="New Password"
+      formControlName="newPassword"
+      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
+    />
 
-      <input
-        type="password"
-        placeholder="Confirm New Password"
-        formControlName="confirmNewPassword"
-        class="universal-card w-full px-3 py-2 border rounded-lg"
-      />
-    </div>
+    <input
+      type="password"
+      placeholder="Confirm New Password"
+      formControlName="confirmNewPassword"
+      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full"
+    />
 
-    <button
-      type="submit"
-      class="universal-button py-2 px-4 rounded-lg mt-4 cursor-pointer"
-      (click)="handleChangePassword()"
-    >
+    <button type="submit" class="universal-button py-2 px-4 rounded-full mt-4 cursor-pointer">
       Save Changes
     </button>
   </form>
