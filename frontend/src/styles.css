@@ -39,7 +39,7 @@ section {
 }
 
 .page-content {
-  @apply mt-32 max-w-6xl mx-auto px-4 md:px-6;
+  @apply pt-25 md:pt-30 max-w-6xl mx-auto px-4 md:px-6;
 }
 
 .universal-card {
@@ -95,4 +95,25 @@ mat-icon.icon-sm {
   font-size: 20px;
   width: 20px;
   height: 20px;
+}
+
+mat-icon.icon-md {
+  font-size: 30px;
+  line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .fc-header-toolbar {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fc-toolbar-chunk .fc-toolbar-title {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+  }
+}
+
+.fc-col-header-cell-cushion {
+  color: black;
 }

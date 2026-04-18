@@ -27,6 +27,7 @@ export class ProfileMenu {
   @Input() darkMode = false;
   @Output() logout = new EventEmitter<void>();
   @Input() user: any = null;
+  isTabletOrDesktop = window.innerWidth >= 768;
 
   constructor(private router: Router) {}
 
@@ -43,6 +44,11 @@ export class ProfileMenu {
     if (this.profileDropdownRef && !this.profileDropdownRef.nativeElement.contains(event.target)) {
       this.profileDropdownOpen = false;
     }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isTabletOrDesktop = window.innerWidth >= 768;
   }
 
   onItemClick(item: any) {

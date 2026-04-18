@@ -1,51 +1,58 @@
 @if (coach; as selectedCoach) {
-  <div class="flex justify-center mt-2 px-4 py-28">
-    <div class="w-full max-w-6xl p-6 universal-card rounded-xl shadow">
-      <div class="flex flex-col h-160 lg:flex-row gap-10">
-        <div class="w-full lg:w-1/2 flex flex-col mt-12">
-          <img
-            [src]="selectedCoach.image"
-            [alt]="selectedCoach.name"
-            class="w-full h-110 object-cover rounded-xl mb-4"
-          />
-
-          <h1 class="text-3xl font-bold mb-4">{{ selectedCoach.title }}</h1>
-          <p class="mb-4 mt-2">{{ selectedCoach?.bio }}</p>
-        </div>
-
-        <div class="w-full h-160 lg:w-1/2">
-          <h2 class="text-2xl font-bold mb-4">Select a Session</h2>
-
-          <div class="w-full overflow-auto">
-            <app-coach-calendar
-              [coach]="selectedCoach"
-              [bookedSessions]="bookedSessions"
-              (bookingConfirmed)="onBookingConfirmed($event)"
-              (bookingCanceled)="onBookingCanceled($event)"
-            >
-            </app-coach-calendar>
-          </div>
-        </div>
-      </div>
-
-      @if (bookedSessions && bookedSessions.length > 0) {
-        @for (session of bookedSessions; track session.id) {
-          <div
-            class="mt-2 p-4 bg-green-100 text-green-800 rounded-xl flex justify-between items-center"
-          >
-            <div>
-              Successfully booked <strong>{{ session.coach.title }}</strong> on
-              {{ session.start | date: 'short' }}!
+  <div class="page-content">
+    <a routerLink="/coaches" class="lg:hidden inline-flex items-center gap-1 mb-4 cursor-pointer">
+      <mat-icon class="text-2xl">chevron_left</mat-icon>
+    </a>
+    <div class="flex justify-center mb-10">
+      <div class="w-full max-w-6xl p-6 universal-card rounded-xl shadow">
+        <div class="flex flex-col md:min-h-130 md:flex-row md:gap-10">
+          <div class="w-full md:w-1/2 flex flex-col">
+            <img
+              [src]="selectedCoach.image"
+              [alt]="selectedCoach.name"
+              class="w-full h-80 object-cover object-[center_15%] rounded-xl mb-4"
+            />
+            <div class="flex flex-col justify-between items-start mb-4">
+              <h1 class="text-xl md:text-2xl font-bold mb-4">{{ selectedCoach.title }}</h1>
+              <p class="mb-4 md:mt-2">{{ selectedCoach?.bio }}</p>
             </div>
-            <button
-              class="universal-button px-2 py-1 cursor-pointer"
-              (click)="cancelConfirmedBooking(session)"
-            >
-              Cancel Booking
-            </button>
           </div>
+
+          <div class="w-full md:w-1/2">
+            <h2 class="text-xl md:text-2xl font-bold mb-4">Select a Session</h2>
+            <div class="w-full overflow-auto">
+              <app-coach-calendar
+                [coach]="selectedCoach"
+                [bookedSessions]="bookedSessions"
+                (bookingConfirmed)="onBookingConfirmed($event)"
+                (bookingCanceled)="onBookingCanceled($event)"
+              >
+              </app-coach-calendar>
+            </div>
+          </div>
+        </div>
+
+        @if (bookedSessions && bookedSessions.length > 0) {
+          @for (session of bookedSessions; track session.id) {
+            <div
+              class="mt-2 p-4 bg-green-100 text-green-800 rounded-xl flex flex-col md:flex-row md:justify-between md:items-center"
+            >
+              <div>
+                Successfully booked <strong>{{ session.coach.title }}</strong> on
+                {{ session.start | date: 'short' }}!
+              </div>
+              <div class="flex justify-end">
+                <button
+                  class="universal-button px-2 py-1 text-sm cursor-pointer"
+                  (click)="cancelConfirmedBooking(session)"
+                >
+                  Cancel Booking
+                </button>
+              </div>
+            </div>
+          }
         }
-      }
+      </div>
     </div>
   </div>
 }

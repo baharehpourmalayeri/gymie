@@ -1,58 +1,62 @@
-<div class="page-content w-100">
+<div class="page-content">
   <div class="flex flex-col items-center mb-6">
     <div class="avatar">
       <mat-icon class="text-black!">account_circle</mat-icon>
     </div>
+    @if (errorMessage) {
+      <p class="text-red-600 text-center mb-4">{{ errorMessage }}</p>
+    }
+    <form
+      [formGroup]="profileForm"
+      class="w-80 md:w-100 space-y-2 mb-18"
+      (ngSubmit)="handleChangePassword()"
+    >
+      <div>
+        <label class="block text-sm font-medium mb-1">Full Name</label>
+        <input
+          type="text"
+          formControlName="name"
+          readonly
+          class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          readonly
+          class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
+        />
+      </div>
+
+      <h3 class="text-sm font-semibold mb-2">Change Password</h3>
+
+      <input
+        type="password"
+        placeholder="CurrentPassword"
+        formControlName="currentPassword"
+        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
+      />
+
+      <input
+        type="password"
+        placeholder="New Password"
+        formControlName="newPassword"
+        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
+      />
+
+      <input
+        type="password"
+        placeholder="Confirm New Password"
+        formControlName="confirmNewPassword"
+        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full"
+      />
+
+      <button type="submit" class="universal-button py-2 px-4 rounded-full mt-4 cursor-pointer">
+        Save Changes
+      </button>
+    </form>
   </div>
-  @if (errorMessage) {
-    <p class="text-red-600 text-center mb-4">{{ errorMessage }}</p>
-  }
-  <form [formGroup]="profileForm" class="space-y-2 mb-18" (ngSubmit)="handleChangePassword()">
-    <div>
-      <label class="block text-sm font-medium mb-1">Full Name</label>
-      <input
-        type="text"
-        formControlName="name"
-        readonly
-        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
-      />
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium mb-1">Email</label>
-      <input
-        type="email"
-        formControlName="email"
-        readonly
-        class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full focus:outline-none focus:ring"
-      />
-    </div>
-
-    <h3 class="text-sm font-semibold mb-2">Change Password</h3>
-
-    <input
-      type="password"
-      placeholder="CurrentPassword"
-      formControlName="currentPassword"
-      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
-    />
-
-    <input
-      type="password"
-      placeholder="New Password"
-      formControlName="newPassword"
-      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full mb-2"
-    />
-
-    <input
-      type="password"
-      placeholder="Confirm New Password"
-      formControlName="confirmNewPassword"
-      class="universal-card w-full px-3 py-2 border border-gray-400 rounded-full"
-    />
-
-    <button type="submit" class="universal-button py-2 px-4 rounded-full mt-4 cursor-pointer">
-      Save Changes
-    </button>
-  </form>
 </div>

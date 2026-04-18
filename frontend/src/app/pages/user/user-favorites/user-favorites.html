@@ -1,9 +1,9 @@
-<div class="page-content w-200 mb-18">
-  <h2 class="font-orbitron text-2xl font-bold mb-4">My Favorites</h2>
+<div class="page-content md:w-200 mb-10">
+  <h2 class="font-orbitron text-xl md:text-2xl font-bold mb-6 ml-10 md:ml-0">My Favorites</h2>
 
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="place-items-center mx-auto grid gap-6 grid-cols-1 md:grid-cols-3">
     @for (workout of workouts; track workout.id) {
-      <div class="relative rounded-xl overflow-hidden shadow-lg flex flex-col">
+      <div class="w-[80%] md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col">
         <img
           [src]="workout.image"
           alt="{{ workout.title }}"

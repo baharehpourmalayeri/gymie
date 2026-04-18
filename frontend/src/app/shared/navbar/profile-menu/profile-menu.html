@@ -20,14 +20,16 @@
         </div>
       }
 
-      <mat-icon class="absolute top-0 right-2 text-sm cursor-pointer translate-y-2.5">
+      <mat-icon
+        class="hidden! md:inline-flex! absolute top-0 right-2 text-sm cursor-pointer translate-y-2.5"
+      >
         expand_more
       </mat-icon>
     </button>
 
-    @if (profileDropdownOpen) {
+    @if (profileDropdownOpen && isTabletOrDesktop) {
       <div
-        class="absolute right-28 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
+        class="absolute right-24 mt-2 w-38 rounded-lg shadow-lg py-2 z-50"
         [ngClass]="darkMode ? 'bg-[#393939] text-[#e0e0e0]' : 'bg-[#dadada] text-black'"
       >
         @for (item of dropdownItems; track item.label) {
@@ -44,8 +46,8 @@
   } @else {
     <a
       routerLink="/login"
-      class="relative w-20 h-10 rounded-full flex items-center justify-center shadow-sm"
-      [ngClass]="darkMode ? 'bg-[#202020] text-white' : 'bg-[#dadada] text-gray-700'"
+      class="relative w-20 h-10 rounded-full flex items-center justify-center shadow-sm hover:font-bold"
+      [ngClass]="darkMode ? 'bg-[#202020] text-[#b3b3b3]' : 'bg-[#dadada] text-black'"
     >
       Login
     </a>

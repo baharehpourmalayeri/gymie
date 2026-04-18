@@ -7,11 +7,13 @@ import { FavoriteToggle } from '../../../shared/favorite/favorite-toggle';
 import { WorkoutScheduleService } from '../../../core/services/workout-schedule.service';
 import { WorkoutCalendar } from '../workout-calendar/workout-calendar';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-workout-detail',
   standalone: true,
-  imports: [CommonModule, FavoriteToggle, WorkoutCalendar],
+  imports: [CommonModule, FavoriteToggle, WorkoutCalendar, MatIconModule, RouterLink],
   templateUrl: './workout-detail.html',
 })
 export class WorkoutDetail {

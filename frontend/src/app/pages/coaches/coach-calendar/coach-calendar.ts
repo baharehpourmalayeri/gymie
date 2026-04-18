@@ -26,21 +26,7 @@ export class CoachCalendar implements OnInit, OnChanges {
   @Output() bookingConfirmed = new EventEmitter<BookedCoachSession>();
   @Output() bookingCanceled = new EventEmitter<number>();
 
-  calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek',
-    plugins: [timeGridPlugin],
-    slotMinTime: '08:00:00',
-    slotMaxTime: '18:00:00',
-    allDaySlot: false,
-    events: [],
-    height: '100%',
-  };
-
-  constructor(
-    private coachScheduleService: CoachScheduleService,
-    private cdr: ChangeDetectorRef,
-    private authService: AuthService,
-  ) {}
+  calendarOptions: CalendarOptions = this.getCalendarOptions();
 
   ngOnInit() {
     this.loadAvailableSessions();
@@ -53,6 +39,28 @@ export class CoachCalendar implements OnInit, OnChanges {
       this.loadAvailableSessions();
     }
   }
+
+  getCalendarOptions(): CalendarOptions {
+    return {
+      initialView: 'timeGridDay',
+      plugins: [timeGridPlugin],
+
+      slotMinTime: '10:00:00',
+      slotMaxTime: '17:00:00',
+      allDaySlot: false,
+
+      events: [],
+
+      height: 'auto',
+    };
+  }
+
+  constructor(
+    private coachScheduleService: CoachScheduleService,
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+  ) {}
+
   loadAvailableSessions() {
     this.coachScheduleService.getSchedule(this.coach.slug).subscribe((allSessions) => {
       const events = allSessions.map((s) => {
@@ -99,7 +107,7 @@ export class CoachCalendar implements OnInit, OnChanges {
     const alreadyBooked = session.isBooked;
     if (alreadyBooked) {
       const bookedSession: BookedCoachSession = this.bookedSessions.filter(
-        (bs) => (bs.session_id = sessionId),
+        (bs) => bs.session_id == sessionId,
       )[0];
       const cancel = window.confirm(`You booked ${this.coach.name}. Cancel it?`);
       if (cancel) {

@@ -1,13 +1,13 @@
 <section class="page-content">
-  <h1 class="font-orbitron text-4xl md:text-3xl font-extrabold mb-14">Meet Our Top Movers</h1>
+  <h1 class="font-orbitron text-xl md:text-2xl font-bold mb-6">Meet Our Top Movers</h1>
 
-  <div class="max-w-6xl pb-20 grid gap-12 md:grid-cols-3 lg:grid-cols-3">
+  <div class="max-w-6xl pb-20 grid gap-12 md:grid-cols-3">
     @for (coach of coaches; track coach.name) {
       <div class="rounded-xl shadow-lg universal-card flex flex-col">
         <img
           [src]="coach.image"
           [alt]="coach.name"
-          class="w-full h-64 rounded-t-xl object-cover transition-transform duration-500 group-hover:scale-105"
+          class="w-full h-70 rounded-t-xl object-cover object-[center_10%]"
         />
 
         <div class="p-6 flex flex-col flex-1 justify-center">

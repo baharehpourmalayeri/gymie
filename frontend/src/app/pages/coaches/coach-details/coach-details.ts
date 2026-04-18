@@ -6,11 +6,13 @@ import { CoachService } from '../../../core/services/coach.service';
 import { CoachScheduleService } from '../../../core/services/coach-schedule.service';
 import { CoachCalendar } from '../coach-calendar/coach-calendar';
 import { ChangeDetectorRef } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-coach-detail',
   standalone: true,
-  imports: [CommonModule, CoachCalendar],
+  imports: [CommonModule, CoachCalendar, MatIconModule, RouterLink],
   templateUrl: './coach-detail.html',
 })
 export class CoachDetail {

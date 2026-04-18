@@ -1,13 +1,13 @@
-<div class="page-content w-200 mb-18">
-  <h2 class="font-orbitron text-2xl font-bold mb-4">Upcoming Bookings</h2>
+<div class="page-content md:w-200 mb-10">
+  <h2 class="font-orbitron text-xl md:text-2xl font-bold mb-6 ml-10 md:ml-0">Upcoming Bookings</h2>
 
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="place-items-center mx-auto grid gap-6 grid-cols-1 md:grid-cols-3">
     @for (coachBooking of coachBookings; track coachBooking.id) {
-      <div class="relative rounded-xl overflow-hidden shadow-lg flex flex-col">
+      <div class="w-[80%] md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col">
         <img
           [src]="coachBooking.coach.image || '/assets/default-workout.jpg'"
           alt="{{ coachBooking.coach.title }}"
-          class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+          class="w-full h-48 object-cover object-[center_15%] transition-transform duration-300 group-hover:scale-105"
         />
         <div class="universal-card p-4 flex flex-col justify-between flex-1">
           <h2 class="text-m font-bold">{{ coachBooking.coach.title }}</h2>
@@ -23,7 +23,7 @@
       </div>
     }
     @for (workoutBooking of workoutBookings; track workoutBooking.id) {
-      <div class="relative rounded-xl overflow-hidden shadow-lg flex flex-col">
+      <div class="w-[80%] md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col">
         <img
           [src]="workoutBooking.workout.image || '/assets/default-workout.jpg'"
           alt="{{ workoutBooking.workout.title }}"

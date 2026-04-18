@@ -4,6 +4,7 @@ import { WorkoutList } from '../../workouts/workout-list/workout-list';
 import { RouterLink } from '@angular/router';
 import { Workout } from '../../../core/models/workout.model';
 
+
 @Component({
   selector: 'app-popular-workouts',
   standalone: true,
