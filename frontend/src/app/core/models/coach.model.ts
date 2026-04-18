@@ -1,5 +1,5 @@
 export interface Coach {
-  id: string;
+  id: number;
   slug: string;
   name: string;
   title: string;
@@ -8,7 +8,7 @@ export interface Coach {
 }
 
 export interface CoachSession {
-  id: string;
+  id: number;
   coach: Coach;
   start: string;
   end: string;

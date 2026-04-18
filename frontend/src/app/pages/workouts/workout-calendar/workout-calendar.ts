@@ -80,7 +80,7 @@ export class WorkoutCalendar implements OnInit, OnChanges {
         }
 
         return {
-          id: sessionId,
+          id: String(sessionId),
           title,
           start: s.start,
           end: s.end,

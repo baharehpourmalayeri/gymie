@@ -1,5 +1,5 @@
 export interface Workout {
-  id: string;
+  id: number;
   slug: string;
   title: string;
   description: string;
@@ -9,7 +9,7 @@ export interface Workout {
 }
 
 export interface WorkoutSession {
-  id: string;
+  id: number;
   workout: Workout;
   start: string;
   end: string;
