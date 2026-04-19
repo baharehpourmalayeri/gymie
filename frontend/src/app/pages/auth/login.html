@@ -14,7 +14,7 @@
           [(ngModel)]="email"
           name="email"
           required
-          class="w-full border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          class="w-full text-base border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
         />
       </div>
 
@@ -25,14 +25,14 @@
           [(ngModel)]="password"
           name="password"
           required
-          class="w-full border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          class="w-full text-base border rounded-full px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
         />
       </div>
 
       <button
         type="submit"
         [disabled]="!email || !password"
-        class="w-full bg-green-800 text-white py-2 rounded-full hover:bg-green-700 transition cursor-pointer disabled:bg-[#bbbbbb] disabled:cursor-not-allowed"
+        class="w-full text-base bg-green-800 text-white py-2 rounded-full hover:bg-green-700 transition cursor-pointer disabled:bg-[#bbbbbb] disabled:cursor-not-allowed"
       >
         Login
       </button>

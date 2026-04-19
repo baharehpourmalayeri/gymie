@@ -3,15 +3,17 @@
 
   <div class="place-items-center mx-auto grid gap-6 grid-cols-1 md:grid-cols-3">
     @for (coachBooking of coachBookings; track coachBooking.id) {
-      <div class="w-[80%] md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col">
+      <div
+        class="w-[80%] md:h-85 md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col"
+      >
         <img
           [src]="coachBooking.coach.image || '/assets/default-workout.jpg'"
           alt="{{ coachBooking.coach.title }}"
           class="w-full h-48 object-cover object-[center_15%] transition-transform duration-300 group-hover:scale-105"
         />
         <div class="universal-card p-4 flex flex-col justify-between flex-1">
-          <h2 class="text-m font-bold">{{ coachBooking.coach.title }}</h2>
-          <p>Coach: {{ coachBooking.coach.name }}</p>
+          <h2 class="font-orbitron text-lg font-bold">{{ coachBooking.coach.title }}</h2>
+          <p>{{ coachBooking.coach.name }}</p>
           <p class="text-gray-500 mt-1">
             {{ coachBooking.start | date: 'mediumDate' }}
           </p>
@@ -23,14 +25,17 @@
       </div>
     }
     @for (workoutBooking of workoutBookings; track workoutBooking.id) {
-      <div class="w-[80%] md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col">
+      <div
+        class="w-[80%] md:h-85 md:w-full relative rounded-xl overflow-hidden shadow-lg flex flex-col"
+      >
         <img
           [src]="workoutBooking.workout.image || '/assets/default-workout.jpg'"
           alt="{{ workoutBooking.workout.title }}"
           class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
         <div class="universal-card p-4 flex flex-col justify-between flex-1">
-          <h2 class="font-orbitron text-m font-bold">{{ workoutBooking.workout.title }}</h2>
+          <h2 class="font-orbitron text-lg font-bold">{{ workoutBooking.workout.title }}</h2>
+          <div></div>
           <p class="text-gray-500 mt-1">
             {{ workoutBooking.start | date: 'mediumDate' }}
           </p>

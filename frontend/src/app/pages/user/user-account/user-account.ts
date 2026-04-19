@@ -58,9 +58,10 @@ export class UserAccount implements OnInit {
       return;
     }
 
+    this.errorMessage = '';
+
     this.authService.changePassword(currentPassword, newPassword, confirmNewPassword).subscribe({
       next: (res) => {
-        this.errorMessage = '';
         this.profileForm.patchValue({
           currentPassword: '',
           newPassword: '',
