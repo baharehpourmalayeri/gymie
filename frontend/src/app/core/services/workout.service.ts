@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Workout } from '../models/workout.model';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class WorkoutService {
-  private workoutsApiUrl = 'http://127.0.0.1:8000/workouts';
-  private favoritesApiUrl = 'http://127.0.0.1:8000/favorites';
+  private workoutsApiUrl = `${environment.apiBaseUrl}/workouts`;
+  private favoritesApiUrl = `${environment.apiBaseUrl}/favorites`;
 
   constructor(
     private http: HttpClient,

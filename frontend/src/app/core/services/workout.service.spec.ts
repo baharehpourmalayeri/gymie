@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { WorkoutService } from './workout.service';
 import { AuthService } from './auth.service';
 import { Workout } from '../models/workout.model';
+import { environment } from '../../environments/environment';
 
 describe('WorkoutService', () => {
   let service: WorkoutService;
@@ -47,7 +48,7 @@ describe('WorkoutService', () => {
       expect(res).toEqual(mockWorkouts);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/workouts/');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/workouts/`);
 
     expect(req.request.method).toBe('GET');
 
@@ -62,7 +63,7 @@ describe('WorkoutService', () => {
       expect(res).toEqual(mockWorkout);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/workouts/full-body');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/workouts/full-body`);
 
     expect(req.request.method).toBe('GET');
 
@@ -77,7 +78,7 @@ describe('WorkoutService', () => {
       expect(res).toEqual([mockWorkout]);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/workouts/?limit=3');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/workouts/?limit=3`);
 
     expect(req.request.method).toBe('GET');
 
@@ -92,7 +93,7 @@ describe('WorkoutService', () => {
       expect(res).toEqual([mockWorkout]);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/workouts/?filter=strength');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/workouts/?filter=strength`);
 
     expect(req.request.method).toBe('GET');
 
@@ -107,7 +108,7 @@ describe('WorkoutService', () => {
       expect(res).toEqual([mockWorkout]);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/favorites/me');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/favorites/me`);
 
     expect(req.request.method).toBe('GET');
 
@@ -122,7 +123,7 @@ describe('WorkoutService', () => {
       expect(res).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/favorites/full-body');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/favorites/full-body`);
 
     expect(req.request.method).toBe('POST');
 
@@ -137,7 +138,7 @@ describe('WorkoutService', () => {
       expect(res).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/favorites/full-body');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/favorites/full-body`);
 
     expect(req.request.method).toBe('DELETE');
 
@@ -153,6 +154,6 @@ describe('WorkoutService', () => {
       },
     });
 
-    httpMock.expectNone('http://127.0.0.1:8000/favorites/me');
+    httpMock.expectNone(`${environment.apiBaseUrl}/favorites/me`);
   });
 });

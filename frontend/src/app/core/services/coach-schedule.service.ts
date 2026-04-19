@@ -3,11 +3,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Coach, CoachSession, BookedCoachSession } from '../models/coach.model';
 import { Observable, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CoachScheduleService {
-  private coachSessionApiUrl = 'http://127.0.0.1:8000/coaches';
-  private coachBookSessionApiUrl = 'http://127.0.0.1:8000/bookings';
+  private coachSessionApiUrl = `${environment.apiBaseUrl}/coaches`;
+  private coachBookSessionApiUrl = `${environment.apiBaseUrl}/bookings`;
 
   constructor(
     private http: HttpClient,

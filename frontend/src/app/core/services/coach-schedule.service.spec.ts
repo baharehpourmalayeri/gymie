@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { CoachScheduleService } from './coach-schedule.service';
 import { AuthService } from './auth.service';
 import { BookedCoachSession, Coach, CoachSession } from '../models/coach.model';
+import { environment } from '../../environments/environment';
 
 describe('CoachScheduleService', () => {
   let service: CoachScheduleService;
@@ -55,7 +56,7 @@ describe('CoachScheduleService', () => {
       expect(res).toEqual(mockResponse);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/coaches/coach-slug/sessions');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/coaches/coach-slug/sessions`);
 
     expect(req.request.method).toBe('GET');
 
@@ -78,7 +79,7 @@ describe('CoachScheduleService', () => {
       expect(res).toEqual(mockBooking);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/coach');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/coach`);
 
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({
@@ -98,7 +99,7 @@ describe('CoachScheduleService', () => {
       },
     });
 
-    httpMock.expectNone('http://127.0.0.1:8000/bookings/coach');
+    httpMock.expectNone(`${environment.apiBaseUrl}/bookings/coach`);
   });
 
   // CANCEL SESSION
@@ -109,7 +110,7 @@ describe('CoachScheduleService', () => {
       expect(res).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/coach/10');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/coach/10`);
 
     expect(req.request.method).toBe('DELETE');
 
@@ -126,7 +127,7 @@ describe('CoachScheduleService', () => {
       expect(res).toEqual(mockBookings);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/coaches/');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/coaches/`);
 
     expect(req.request.method).toBe('GET');
 

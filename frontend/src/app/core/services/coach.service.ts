@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Coach } from '../models/coach.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CoachService {
-  private apiUrl = 'http://127.0.0.1:8000/coaches';
+  private apiUrl = `${environment.apiBaseUrl}/coaches`;
 
   constructor(private http: HttpClient) {}
 

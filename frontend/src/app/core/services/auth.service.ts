@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { AuthResponse } from '../../core/models/user.model';
+import { environment } from '../../environments/environment';
 
 import { User } from '../models/user.model';
 
@@ -9,8 +10,8 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://127.0.0.1:8000/users';
-  private baseUrl = 'http://127.0.0.1:8000';
+  private apiUrl = `${environment.apiBaseUrl}/users`;
+  private baseUrl = environment.apiBaseUrl;
   private authStateSubject = new BehaviorSubject<AuthResponse | null>(this.readStoredAuth());
   authState$ = this.authStateSubject.asObservable();
 

@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { WorkoutScheduleService } from './workout-schedule.service';
 import { AuthService } from './auth.service';
 import { BookedWorkoutSession, WorkoutBase } from '../models/workout.model';
+import { environment } from '../../environments/environment';
 
 describe('WorkoutScheduleService', () => {
   let service: WorkoutScheduleService;
@@ -55,7 +56,7 @@ describe('WorkoutScheduleService', () => {
       expect(res).toEqual(mockBookings);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/workouts/');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/workouts/`);
 
     expect(req.request.method).toBe('GET');
 
@@ -80,7 +81,7 @@ describe('WorkoutScheduleService', () => {
       expect(res).toEqual(mockBooking);
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/workout');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/workout`);
 
     expect(req.request.method).toBe('POST');
 
@@ -100,7 +101,7 @@ describe('WorkoutScheduleService', () => {
       expect(res).toBeTruthy();
     });
 
-    const req = httpMock.expectOne('http://127.0.0.1:8000/bookings/workout/5');
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/bookings/workout/5`);
 
     expect(req.request.method).toBe('DELETE');
 
@@ -116,6 +117,6 @@ describe('WorkoutScheduleService', () => {
       },
     });
 
-    httpMock.expectNone('http://127.0.0.1:8000/bookings/workout');
+    httpMock.expectNone(`${environment.apiBaseUrl}/bookings/workout`);
   });
 });
